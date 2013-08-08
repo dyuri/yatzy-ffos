@@ -1,10 +1,92 @@
 // types:
 // upper1, upper2, upper3, upper4, upper5, upper6
-// kinds2, kinds3, kinds4
+// kind2, kind3, kind4
 // 2pairs, smallSt, largeSt, chance, house, yatzy
 
-// states: array(5)
-function checkUppers(states, number) {
+// TODO: maybe use html5 data api for attributes (Robi's idea)
+var Game = { 
+  // dice states
+  states: [0, 0, 0, 0, 0],
+  // checked dice - they don't roll 
+  checkedIndexes: [],
+  // types, that have been checked
+  usedTypes: [], // TODO: can be in the dom
+  upperScore: 0, // TODO: can be document.getElementById("upperScore")
+  totalScore: 0, // TODO: can be document.getElementById("totalScore")
+  // 3 rolls in a turn
+  rollCount: 0,
+  // upper bonus (50 if more than 63)
+  hasUpperBonus: false, // TODO: can be in the dom
+  availableScores: [], // TODO: can be in the dom
+
+  random: function(min, max) {
+     return Math.floor(Math.random() * (max - min + 1) + min);
+  },
+
+  roll: function() {
+    if (this.rollCount < 3) {
+      // parallel for all dice?
+      this.states.forEach(function(element, index, array) { 
+        if (this.checkedIndexes.indexOf(index) < 0) {
+          this.states[index] = this.random(1, 6);
+        }
+      });
+      // TODO: update dice displays
+      // TODO: update "roll" button to "reroll" if rollcount > 0
+      var scores = getScores(this.states, this.usedTypes);
+      // TODO: update available scores
+      this.rollCount += 1;
+    }
+  },
+
+  newGame: function() {
+    this.usedTypes = [];
+    this.upperScore = 0;
+    this.totalScore = 0;
+    this.checkedIndexes = [];
+    this.rollCount = 0;
+    this.hasUpperBonus = false;
+    // TODO: update "reroll" button to "roll"
+    // TODO: update dice display (unselected)
+  },
+
+  selectDice: function(diceIndex) {
+    this.checkedIndexes.push(diceIndex);
+    // TODO: update dice display (selected)
+  },
+
+  unselectDice: function(diceIndex) {
+    var foundIndex = this.checkedIndexes.indexOf(diceIndex);
+    if (foundIndex >= 0) {
+      this.checkedIndexes.splice(foundIndex, 1);
+    }
+    // TODO: update dice display (unselected)
+  },
+
+  selectType: function(type, score) {
+    this.totalScore += score;
+    if (type.startsWith("upper")) {
+      this.upperScore += score;
+      // check if upper has more than 63 and add 50
+      if (!this.hasUpperBonus && this.upperScore >= 63) {
+        this.hasUpperBonus = true;
+        this.totalScore += 50;
+        this.upperScore += 50;
+      }
+    }
+    this.checkedIndexes = [];
+    this.rollCount = 0;
+    // TODO: update dice display (unselected)
+  },
+
+  save: function() {
+  },
+
+  load: function() {
+  }
+};
+
+function checkUpper(states, number) {
   var filtered = states.filter(function(element, index, array) { return element == number; });
   var score = 0;
   if (filtered.length > 0) {
@@ -15,7 +97,7 @@ function checkUppers(states, number) {
   return {"type": "upper"+number, "score": score};
 }
 
-function checkKinds(states, number, count) {
+function checkKind(states, number, count) {
   var filtered = states.filter(function(element, index, array) { return element == number; });
   var score = 0;
 
@@ -24,7 +106,7 @@ function checkKinds(states, number, count) {
       return previousValue + currentValue;
     });
   }
-  return {"type": "kinds"+count, "score": score};
+  return {"type": "kind"+count, "score": score};
 }
 
 function checkSmallStraight(states) {
@@ -61,8 +143,8 @@ function checkYatzy(states) {
   return {"type": "yatzy", "score": score};
 }
 
-// states: [2, 2, 3, 5, 4], usedScores: ["kinds2", "upper1"]
-function getScores(states, usedScores) {
+// states: [2, 2, 3, 5, 4], usedTypes: ["kind2", "upper1"]
+function getScores(states, usedTypes) {
   if (states.length != 5) {
     console.log("state length error");
     return;
@@ -76,13 +158,13 @@ function getScores(states, usedScores) {
   var usedKinds = [];
   // backwards because we need the max for kinds - (2, 2, 3, 3, 1) the (3, 3) is better than (2, 2)
   for (i = 6; i >= 1; i--) {
-    var upper = checkUppers(states, i);
+    var upper = checkUpper(states, i);
     if (upper.score > 0) {
       scores.push(upper);
     }
 
     for (j = 2; j <= 4 ; j++) {
-      var kind = checkKinds(states, i, j);
+      var kind = checkKind(states, i, j);
       if (kind.score > 0 && usedKinds.indexOf(kind.type) < 0) {
         usedKinds.push(kind.type);
         scores.push(kind);
@@ -136,5 +218,6 @@ function getScores(states, usedScores) {
     scores.push(yatzy);
   }
 
-  return scores.filter(function(element, index, array) { return usedScores.indexOf(element.type) < 0; });;
+  return scores.filter(function(element, index, array) { return usedTypes.indexOf(element.type) < 0; });;
 }
+
