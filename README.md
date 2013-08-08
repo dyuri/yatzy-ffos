@@ -10,22 +10,22 @@
 - egy jatek addig tart, amig van ures mezo
 
 
-kezdokepernyo/eredmenytablazat
-uj jatek
-    kockadobas
-    fordulo
-        lockolas
-        ujradobas
-        fordulo lezarasa (tablazatba iras)
-    eredmeny szamolasa
-    jatek lezarasa ellenorzes
-    jatek mentese
-eredmenytablazat
+* kezdokepernyo/eredmenytablazat
+* uj jatek
+    * kockadobas
+    * fordulo
+        * lockolas
+        * ujradobas
+        * fordulo lezarasa (tablazatba iras)
+    * eredmeny szamolasa
+    * jatek lezarasa ellenorzes
+    * jatek mentese
+* eredmenytablazat
     
     
 tech:
-- esetleg zepto
-- <meta name="viewport" content="width=device-width">
-- hg a bitbucketen
-- valahova deployolunk
-- csak dev verzio van
+* esetleg zepto
+* <meta name="viewport" content="width=device-width">
+* hg a bitbucketen
+* valahova deployolunk
+* csak dev verzio van
