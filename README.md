@@ -8,7 +8,7 @@
 - fordulo addig tart amig be nem irunk valamit a tablazatba
 - fordulo vegen felengedunk minden lockolt kockat
 - egy jatek addig tart, amig van ures mezo
-
+---
 
 * kezdokepernyo/eredmenytablazat
 * uj jatek
@@ -20,24 +20,12 @@
     * eredmeny szamolasa
     * jatek lezarasa ellenorzes
     * jatek mentese
-* eredmenytablazat
-kezdokepernyo/eredmenytablazat
-uj jatek
-    kockadobas
-    fordulo
-        lockolas
-        ujradobas
-        fordulo lezarasa (tablazatba iras)
-    eredmeny szamolasa
-    jatek lezarasa ellenorzes
-    jatek mentese
-eredmenytablazat
-    
+---
     
 tech:
 
 * esetleg zepto
 * <meta name="viewport" content="width=device-width">
-* hg a bitbucketen
+* hg a bitbucketen: https://szotyi@bitbucket.org/dyuri/yatzy-ffos
 * valahova deployolunk
 * csak dev verzio van
