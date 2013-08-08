@@ -1,0 +1,42 @@
+table.sheet {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+table.sheet tr.buttons td {
+  width: 33%;
+  height: 40px;
+}
+
+table.sheet tr.score td {
+  height: 25px;
+}
+
+.sheet button {
+  display: inline-block;
+  background: none;
+  border: none;
+  border-right: 1px solid #888;
+  border-bottom: 1px solid #888;
+  border-radius: 0;
+  border-bottom-right-radius: 8px;
+  height: 39px;
+  width: 95%;
+  margin: 0;
+  padding: 4px;
+  text-align: left;
+  position: relative;
+}
+
+.sheet button:active {
+  background-color: #eeb;
+}
+
+.sheet button span {
+  position: absolute;
+  right: 4px;
+  top: 8px;
+  font-size: .9em;
+  color: #14a;
+}
