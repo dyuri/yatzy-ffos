@@ -8,7 +8,7 @@
 - fordulo addig tart amig be nem irunk valamit a tablazatba
 - fordulo vegen felengedunk minden lockolt kockat
 - egy jatek addig tart, amig van ures mezo
-
+---
 
 * kezdokepernyo/eredmenytablazat
 * uj jatek
@@ -20,19 +20,7 @@
     * eredmeny szamolasa
     * jatek lezarasa ellenorzes
     * jatek mentese
-* eredmenytablazat
-kezdokepernyo/eredmenytablazat
-uj jatek
-    kockadobas
-    fordulo
-        lockolas
-        ujradobas
-        fordulo lezarasa (tablazatba iras)
-    eredmeny szamolasa
-    jatek lezarasa ellenorzes
-    jatek mentese
-eredmenytablazat
-    
+---
     
 tech:
 
