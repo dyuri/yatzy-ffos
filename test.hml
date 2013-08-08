@@ -1,0 +1,68 @@
+<div id="test1"></div>
+<div id="test2"></div>
+<div id="test3"></div>
+<div id="test4"></div>
+<div id="test5"></div>
+<div id="test6"></div>
+<div id="test7"></div>
+<div id="test8"></div>
+<div id="test9"></div>
+<div id="test10"></div>
+<div id="test11"></div>
+<div id="test12"></div>
+<div id="test13"></div>
+<div id="test14"></div>
+<div id="test15"></div>
+<div id="test16"></div>
+<div id="test17"></div>
+<div id="test18"></div>
+<div id="test19"></div>
+<script type="text/javascript" src="js/states.js"></script>
+
+<script>
+function hasTypeWithScore(scores, type, score, index) {
+  var div = document.getElementById("test"+index);
+  var has = scores.some(function(element, index, array) { return element.type == type && element.score == score; });
+  if (has) {
+    div.innerHTML = "<font color='green'>"+ index + " OK (" + type + ")</font>";
+  } else {
+    div.innerHTML = "<font color='red'>" + index + " Failed (" + type + ")</font>";
+  }
+}
+function hasNoType(scores, type, index) {
+  var div = document.getElementById("test"+index);
+  var has = scores.every(function(element, index, array) { return element.type != type; });
+  if (has) {
+    div.innerHTML = "<font color='green'>"+ index + " OK (no " + type + ")</font>";
+  } else {
+    div.innerHTML = "<font color='red'>" + index + " Failed (no " + type + ")</font>";
+  }
+}
+// test yatzy
+var t = 1; 
+var s1 = getScores([2, 2, 2, 2, 2], []);
+hasTypeWithScore(s1, "yatzy", 50, t++);
+hasTypeWithScore(s1, "house", 10, t++);
+hasTypeWithScore(s1, "upper2", 10, t++);
+hasTypeWithScore(s1, "kinds2", 4, t++);
+hasTypeWithScore(s1, "kinds3", 6, t++);
+hasTypeWithScore(s1, "kinds4", 8, t++);
+var s2 = getScores([2, 3, 3, 2, 3], []);
+hasTypeWithScore(s2, "house", 13, t++);
+hasTypeWithScore(s2, "upper2", 4, t++);
+hasTypeWithScore(s2, "upper3", 9, t++);
+hasTypeWithScore(s2, "kinds2", 6, t++);
+hasTypeWithScore(s2, "kinds3", 9, t++);
+var s3 = getScores([5, 2, 3, 1, 4], ["upper1"]);
+hasTypeWithScore(s3, "smallSt", 15, t++);
+hasNoType(s3, "upper1", t++);
+var s4 = getScores([2, 4, 3, 5, 6], []);
+hasTypeWithScore(s4, "largeSt", 20, t++);
+var s5 = getScores([2, 2, 4, 5, 6], ["kinds2", "upper2", "upper6"]);
+hasTypeWithScore(s5, "chance", 19, t++);
+hasTypeWithScore(s5, "upper4", 4, t++);
+hasTypeWithScore(s5, "upper5", 5, t++);
+hasNoType(s5, "kinds2", t++);
+hasNoType(s5, "upper6", t++);
+</script>
+
