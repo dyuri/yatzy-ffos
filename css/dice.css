@@ -12,13 +12,25 @@
   overflow: hidden;
   position: relative;
   font-size: 40px;
+  text-overflow: clip;
+  white-space: nowrap;
 
+  /* rolling */
+  transition: text-indent 1s ease-out;
+}
+
+.dice button:active,
+.dice button:hover {
+  text-indent: -106px;
 }
 
 .dice button span {
-  display: block;
+  display: inline-block;
   line-height: 53px;
   height: 53px;
+  width: 53px;
   margin: 0;
   padding: 0;
+  text-align: center;
+  text-indent: 0;
 }
