@@ -24,6 +24,7 @@
     
     
 tech:
+
 * esetleg zepto
 * <meta name="viewport" content="width=device-width">
 * hg a bitbucketen
