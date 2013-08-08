@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+    Exchange the line above for this to enable offline support
+    <html manifest="manifest.appcache">
+ -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="css/base.css">
+  <link rel="stylesheet" type="text/css" href="css/headers.css">
+  <link rel="stylesheet" type="text/css" href="css/buttons.css">
+  <link rel="stylesheet" type="text/css" href="css/toolbars.css">
+  <link rel="stylesheet" type="text/css" href="css/sheet.css">
+  <link rel="stylesheet" type="text/css" href="css/dice.css">
+  <title>Yatzy</title>
+</head>
+
+<body>
+
+  <section role="region">
+    <header>
+      <menu type="toolbar">
+        <button id="install"><span class="icon icon-add">add</span></button>
+      </menu>
+      <h1>
+        Yatzy
+      </h1>
+    </header>
+  </section>
+
+  <div id="main">
+    <p id="installation-instructions">Press the + button in the top right corner to install this app.</p>
+    <table class="sheet">
+      <tr class="buttons">
+        <td><button id="sbtn_1">1 <span>4</span></button></td>
+        <td><button id="sbtn_2">2 <span></span></button></td>
+        <td><button id="sbtn_3">3 <span></span></button></td>
+      </tr>
+      <tr class="buttons">
+        <td><button id="sbtn_4">4 <span></span></button></td>
+        <td><button id="sbtn_5">5 <span></span></button></td>
+        <td><button id="sbtn_6">6 <span></span></button></td>
+      </tr>
+      <tr class="score">
+        <td colspan="3"></td>
+      </tr>
+      <tr class="buttons">
+        <td><button id="sbtn_1p">1pair <span></span></button></td>
+        <td><button id="sbtn_2p">2pair <span></span></button></td>
+        <td><button id="sbtn_3aok">3aok <span></span></button></td>
+      </tr>
+      <tr class="buttons">
+        <td><button id="sbtn_4aok">4aok <span></span></button></td>
+        <td><button id="sbtn_ss">ss <span></span></button></td>
+        <td><button id="sbtn_ls">ls <span></span></button></td>
+      </tr>
+      <tr class="buttons">
+        <td><button id="sbtn_f">full <span></span></button></td>
+        <td><button id="sbtn_y">yatzy <span>50</span></button></td>
+        <td><button id="sbtn_ch">chance <span>36</span></button></td>
+      </tr>
+      <tr class="score">
+        <td colspan="3"></td>
+      </tr>
+    </table>
+  </div>
+
+  <footer>
+    <div role="toolbar">
+
+      <ul class="dice">
+        <li>1</li>
+        <li>2</li>
+        <li><button id="die_3"><span>1</span><span>2</span><span>3</span></button></li>
+        <li>4</li>
+        <li>5</li>
+      </ul>
+
+      <ul class="menu">
+        <li><button id="btn_new_game" class="new_game">New</button></li>
+        <li><button id="btn_help" class="help">Help</button></li>
+        <li><button id="btn_roll" class="roll">Roll</button></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="js/lib/zepto.min.js"></script>
+  <script type="text/javascript" src="js/base.js"></script>
+</body>
+</html>
