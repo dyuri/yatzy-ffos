@@ -21,6 +21,17 @@
     * jatek lezarasa ellenorzes
     * jatek mentese
 * eredmenytablazat
+kezdokepernyo/eredmenytablazat
+uj jatek
+    kockadobas
+    fordulo
+        lockolas
+        ujradobas
+        fordulo lezarasa (tablazatba iras)
+    eredmeny szamolasa
+    jatek lezarasa ellenorzes
+    jatek mentese
+eredmenytablazat
     
     
 tech:
