@@ -26,6 +26,6 @@ eredmenytablazat
 tech:
 - esetleg zepto
 - <meta name="viewport" content="width=device-width">
-- hg a bitbucketen
+- hg a bitbucketen: https://szotyi@bitbucket.org/dyuri/yatzy-ffos
 - valahova deployolunk
 - csak dev verzio van
