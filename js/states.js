@@ -1,12 +1,13 @@
+window.yatzy = window.yatzy || {};
+
+(function (Y) {
 // types:
 // upper1, upper2, upper3, upper4, upper5, upper6
 // kind2, kind3, kind4
 // 2pairs, smallSt, largeSt, chance, house, yatzy
 
-(function () {
-
 // TODO: maybe use html5 data api for attributes (Robi's idea)
-var Game = { 
+Y.game = { 
   // dice states
   states: [0, 0, 0, 0, 0],
   // checked dice - they don't roll 
@@ -22,23 +23,42 @@ var Game = {
   availableScores: [], // TODO: can be in the dom
 
   random: function(min, max) {
-     return Math.floor(Math.random() * (max - min + 1) + min);
+    min = min || 1;
+    max = max || 6;
+    return Math.floor(Math.random() * (max - min + 1) + min);
   },
 
   roll: function() {
+    var i, states;
+
     if (this.rollCount < 3) {
       // parallel for all dice?
-      this.states.forEach(function(element, index, array) { 
-        if (this.checkedIndexes.indexOf(index) < 0) {
-          this.states[index] = this.random(1, 6);
+      states = [];
+      
+      for (i = 0; i < 5; i++) {
+        if (!this.isSelected(i)) {
+          states.push(this.random(1, 6));
+        } else {
+          states.push(this.states[i]);
         }
-      });
+      }
+
       // TODO: update dice displays
       // TODO: update "roll" button to "reroll" if rollcount > 0
-      var scores = getScores(this.states, this.usedTypes);
+      // don't use the actual states array, but a copy of it
+      var scores = getScores(states.slice(0), this.usedTypes);
+      console.log(scores);
+
       // TODO: update available scores
       this.rollCount += 1;
+
+      // store states
+      this.states = states;
+
+      return this.states;
     }
+    
+    return null;
   },
 
   newGame: function() {
@@ -50,6 +70,10 @@ var Game = {
     this.hasUpperBonus = false;
     // TODO: update "reroll" button to "roll"
     // TODO: update dice display (unselected)
+  },
+
+  isSelected: function(diceIndex) {
+    return this.checkedIndexes.indexOf(diceIndex) > -1;
   },
 
   selectDice: function(diceIndex) {
@@ -96,7 +120,7 @@ function checkUpper(states, number) {
       return previousValue + currentValue;
     });
   }
-  return {"type": "upper"+number, "score": score};
+  return {type: "upper"+number, score: score};
 }
 
 function checkKind(states, number, count) {
@@ -108,7 +132,7 @@ function checkKind(states, number, count) {
       return previousValue + currentValue;
     });
   }
-  return {"type": "kind"+count, "score": score};
+  return {type: "kind"+count, score: score, number: number};
 }
 
 function checkSmallStraight(states) {
@@ -117,7 +141,7 @@ function checkSmallStraight(states) {
   if (isSmallSt){ 
     score = 15;
   }
-  return {"type": "smallSt", "score": score};
+  return {type: "smallSt", score: score};
 }
 
 function checkLargeStraight(states) {
@@ -126,14 +150,14 @@ function checkLargeStraight(states) {
   if (isLargeSt){ 
     score = 20;
   }
-  return {"type": "largeSt", "score": score};
+  return {type: "largeSt", score: score};
 }
 
 function checkChance(states) {
   var score = states.reduce(function(previousValue, currentValue, index, array){
     return previousValue + currentValue;
   });
-  return {"type": "chance", "score": score};
+  return {type: "chance", score: score};
 }
 
 function checkYatzy(states) {
@@ -142,11 +166,11 @@ function checkYatzy(states) {
   if (filtered.length === 5) {
     score = 50;  
   }
-  return {"type": "yatzy", "score": score};
+  return {type: "yatzy", score: score, number: states[0]};
 }
 
 // states: [2, 2, 3, 5, 4], usedTypes: ["kind2", "upper1"]
-function getScores(states, usedTypes) {
+var getScores = function (states, usedTypes) {
   if (states.length !== 5) {
     console.log("state length error");
     return;
@@ -182,7 +206,7 @@ function getScores(states, usedTypes) {
 
   // 2 pairs
   if (pairs.length === 2) {
-    scores.push({"type": "2pairs", score: pairs[0].score + pairs[1].score});
+    scores.push({type: "2pairs", score: pairs[0].score + pairs[1].score});
   }
 
   // straights
@@ -196,19 +220,14 @@ function getScores(states, usedTypes) {
   }
 
   // house
-  if (threes && pairs.length > 0) {
-    if (pairs.length === 1) {
-      // it's a yatzy
-      scores.push({"type": "house", "score": threes.score + pairs[0].score});
-    } else {
-      // it's two different states (2, 2, 3, 3, 3);
-      var pairScore = threes.score / 3 * 2;
-      pairs.forEach(function(element, index, array) {
-        if (element.score !== pairScore) {
-          scores.push({"type": "house", "score": threes.score + element.score});
-        }
-      });
-    }
+  if (threes && pairs.length === 2) {
+    // it's two different states (2, 2, 3, 3, 3);
+    var pairScore = threes.score / 3 * 2;
+    pairs.forEach(function(element, index, array) {
+      if (element.score !== pairScore) {
+        scores.push({type: "house", score: threes.score + element.score});
+      }
+    });
   }
 
   // chance
@@ -218,9 +237,12 @@ function getScores(states, usedTypes) {
   var yatzy = checkYatzy(states);
   if (yatzy.score > 0) {
     scores.push(yatzy);
+    // yatzy is a house as well
+    scores.push({type: "house", score: 5*yatzy.number});
   }
 
   return scores.filter(function(element, index, array) { return usedTypes.indexOf(element.type) < 0; });
-}
+};
+Y.getScores = getScores;
 
-}());
+}(window.yatzy));
