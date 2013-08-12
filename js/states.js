@@ -3,6 +3,8 @@
 // kind2, kind3, kind4
 // 2pairs, smallSt, largeSt, chance, house, yatzy
 
+(function () {
+
 // TODO: maybe use html5 data api for attributes (Robi's idea)
 var Game = { 
   // dice states
@@ -87,7 +89,7 @@ var Game = {
 };
 
 function checkUpper(states, number) {
-  var filtered = states.filter(function(element, index, array) { return element == number; });
+  var filtered = states.filter(function(element, index, array) { return element === number; });
   var score = 0;
   if (filtered.length > 0) {
     score = filtered.reduce(function(previousValue, currentValue, index, array){
@@ -98,7 +100,7 @@ function checkUpper(states, number) {
 }
 
 function checkKind(states, number, count) {
-  var filtered = states.filter(function(element, index, array) { return element == number; });
+  var filtered = states.filter(function(element, index, array) { return element === number; });
   var score = 0;
 
   if (filtered.length >= count) {
@@ -111,7 +113,7 @@ function checkKind(states, number, count) {
 
 function checkSmallStraight(states) {
   var score = 0;
-  var isSmallSt = states.sort().every(function(element, index, array) { return element == index + 1; });
+  var isSmallSt = states.sort().every(function(element, index, array) { return element === index + 1; });
   if (isSmallSt){ 
     score = 15;
   }
@@ -120,7 +122,7 @@ function checkSmallStraight(states) {
 
 function checkLargeStraight(states) {
   var score = 0;
-  var isLargeSt = states.sort().every(function(element, index, array) { return element == index + 2; });
+  var isLargeSt = states.sort().every(function(element, index, array) { return element === index + 2; });
   if (isLargeSt){ 
     score = 20;
   }
@@ -135,9 +137,9 @@ function checkChance(states) {
 }
 
 function checkYatzy(states) {
-  var filtered = states.filter(function(element, index, array) { return element == states[0]; });
+  var filtered = states.filter(function(element, index, array) { return element === states[0]; });
   var score = 0;
-  if (filtered.length == 5) {
+  if (filtered.length === 5) {
     score = 50;  
   }
   return {"type": "yatzy", "score": score};
@@ -145,7 +147,7 @@ function checkYatzy(states) {
 
 // states: [2, 2, 3, 5, 4], usedTypes: ["kind2", "upper1"]
 function getScores(states, usedTypes) {
-  if (states.length != 5) {
+  if (states.length !== 5) {
     console.log("state length error");
     return;
   }
@@ -157,29 +159,29 @@ function getScores(states, usedTypes) {
   var threes = null;
   var usedKinds = [];
   // backwards because we need the max for kinds - (2, 2, 3, 3, 1) the (3, 3) is better than (2, 2)
-  for (i = 6; i >= 1; i--) {
+  for (var i = 6; i >= 1; i--) {
     var upper = checkUpper(states, i);
     if (upper.score > 0) {
       scores.push(upper);
     }
 
-    for (j = 2; j <= 4 ; j++) {
+    for (var j = 2; j <= 4 ; j++) {
       var kind = checkKind(states, i, j);
       if (kind.score > 0 && usedKinds.indexOf(kind.type) < 0) {
         usedKinds.push(kind.type);
         scores.push(kind);
       }
-      if (j == 2 && kind.score > 0) {
+      if (j === 2 && kind.score > 0) {
         pairs.push(kind);      
       }
-      if (j == 3 && kind.score > 0) {
+      if (j === 3 && kind.score > 0) {
         threes = kind;
       }
     }
   }
 
   // 2 pairs
-  if (pairs.length == 2) {
+  if (pairs.length === 2) {
     scores.push({"type": "2pairs", score: pairs[0].score + pairs[1].score});
   }
 
@@ -195,14 +197,14 @@ function getScores(states, usedTypes) {
 
   // house
   if (threes && pairs.length > 0) {
-    if (pairs.length == 1) {
+    if (pairs.length === 1) {
       // it's a yatzy
       scores.push({"type": "house", "score": threes.score + pairs[0].score});
     } else {
       // it's two different states (2, 2, 3, 3, 3);
-      var pairScore = threes.score / 3 * 2
+      var pairScore = threes.score / 3 * 2;
       pairs.forEach(function(element, index, array) {
-        if (element.score != pairScore) {
+        if (element.score !== pairScore) {
           scores.push({"type": "house", "score": threes.score + element.score});
         }
       });
@@ -218,6 +220,7 @@ function getScores(states, usedTypes) {
     scores.push(yatzy);
   }
 
-  return scores.filter(function(element, index, array) { return usedTypes.indexOf(element.type) < 0; });;
+  return scores.filter(function(element, index, array) { return usedTypes.indexOf(element.type) < 0; });
 }
 
+}());
