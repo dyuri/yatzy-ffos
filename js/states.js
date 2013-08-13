@@ -33,10 +33,20 @@ Y.init = function () {
   // event handlers
   $('#btn_roll').on('click', Y.game.roll.bind(Y.game));
   $('#btn_new_game').on('click', Y.game.newGame.bind(Y.game));
+  $('.dice').on('click', 'button', function (e) {
+    var button = $(e.currentTarget);
+
+    Y.game.toggleDie(button.attr('data-die-index'));
+  }, this);
 };
 
 Y.board = {
   setDie: function (index, number, dontRoll) {
+    // don't roll selected die
+    if (this.isSelected(index)) {
+      return;
+    }
+
     var r = dontRoll ? 0 : random(0, 9),
         button = $('#die_'+index),
         w = button.children().first().width();
@@ -52,15 +62,34 @@ Y.board = {
   },
   resetDice: function () {
     this.setDice([0, 0, 0, 0, 0], true);
+    this.unselectAll();
+  },
+  unselectAll: function () {
+    $('.dice button').removeClass('selected');
+  },
+  getDieNumber: function (index) {
+    var button = $('#die_'+index);
+
+    return +button.attr('data-value');
+  },
+  getNumbers: function () {
+    return [0, 1, 2, 3, 4].map(function (i) {
+      return this.getDieNumber(i);
+    }, this);
+  },
+  isSelected: function (i) {
+    return $('#die_'+i).hasClass('selected');
+  },
+  selectDie: function (i) {
+    $('#die_'+i).addClass('selected');
+  },
+  unselectDie: function (i) {
+    $('#die_'+i).removeClass('selected');
   }
 };
 
 // TODO: maybe use html5 data api for attributes (Robi's idea)
 Y.game = { 
-  // dice states
-  states: [0, 0, 0, 0, 0],
-  // checked dice - they don't roll 
-  checkedIndexes: [],
   // types, that have been checked
   usedTypes: [], // TODO: can be in the dom
   upperScore: 0, // TODO: can be document.getElementById("upperScore")
@@ -82,7 +111,7 @@ Y.game = {
         if (!this.isSelected(i)) {
           states.push(random(1, 6));
         } else {
-          states.push(this.states[i]);
+          states.push(Y.board.getDieNumber(i));
         }
       }
 
@@ -97,10 +126,7 @@ Y.game = {
       // TODO: update available scores
       this.rollCount += 1;
 
-      // store states
-      this.states = states;
-
-      return this.states;
+      return states;
     }
     
     return null;
@@ -110,7 +136,6 @@ Y.game = {
     this.usedTypes = [];
     this.upperScore = 0;
     this.totalScore = 0;
-    this.checkedIndexes = [];
     this.rollCount = 0;
     this.hasUpperBonus = false;
     // TODO: update "reroll" button to "roll"
@@ -119,20 +144,25 @@ Y.game = {
   },
 
   isSelected: function(diceIndex) {
-    return this.checkedIndexes.indexOf(diceIndex) > -1;
+    return Y.board.isSelected(diceIndex);
   },
 
-  selectDice: function(diceIndex) {
-    this.checkedIndexes.push(diceIndex);
-    // TODO: update dice display (selected)
-  },
-
-  unselectDice: function(diceIndex) {
-    var foundIndex = this.checkedIndexes.indexOf(diceIndex);
-    if (foundIndex >= 0) {
-      this.checkedIndexes.splice(foundIndex, 1);
+  toggleDie: function(diceIndex) {
+    if (this.rollCount > 0 && this.rollCount < 3) {
+      if (this.isSelected(diceIndex)) {
+        this.unselectDie(diceIndex);
+      } else {
+        this.selectDie(diceIndex);
+      }
     }
-    // TODO: update dice display (unselected)
+  },
+
+  selectDie: function(diceIndex) {
+    Y.board.selectDie(diceIndex);
+  },
+
+  unselectDie: function(diceIndex) {
+    Y.board.unselectDie(diceIndex);
   },
 
   selectType: function(type, score) {
@@ -146,9 +176,9 @@ Y.game = {
         this.upperScore += 50;
       }
     }
-    this.checkedIndexes = [];
     this.rollCount = 0;
     // TODO: update dice display (unselected)
+    Y.board.unselectAll();
   },
 
   save: function() {
