@@ -19,6 +19,10 @@
   transition: text-indent 1s ease-out;
 }
 
+.dice button.selected {
+  background: #eeb;
+}
+
 .dice button span {
   display: inline-block;
   line-height: 53px;
