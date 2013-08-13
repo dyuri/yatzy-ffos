@@ -4,7 +4,7 @@ window.yatzy = window.yatzy || {};
 // types:
 // upper1, upper2, upper3, upper4, upper5, upper6
 // kind2, kind3, kind4
-// 2pairs, smallSt, largeSt, chance, house, yatzy
+// twopairs, smallSt, largeSt, chance, house, yatzy
 
 var random = function(min, max) {
   min = min || 1;
@@ -45,6 +45,9 @@ Y.init = function () {
       var button = $(e.currentTarget);
       Y.game.toggleDie(button.attr('data-die-index'));
     }, this);
+    $('.sheet').on('click', 'button:not([disabled])', function (e) {
+      Y.board.selectCell(e.currentTarget);
+    });
   }
 };
 
@@ -64,6 +67,15 @@ Y.board = {
       }
     }, this);
   },
+  updateTotalScores: function (upper, total, bonus) {
+    $('#upper_score span').html(upper);
+    $('#total_score span').html(total);
+    if (bonus) {
+      $('.sheet').addClass('bonus');
+    } else {
+      $('.sheet').removeClass('bonus');
+    }
+  },
   setRolling: function () {
     var $sheet = $('.sheet');
 
@@ -72,6 +84,23 @@ Y.board = {
   },
   getRolling: function () {
     return $('.sheet').hasClass('rolling');
+  },
+  getScore: function (cell) {
+    var $cell = $(cell);
+
+    return +$cell.find('span').text() || 0;
+  },
+  selectCell: function (cell) {
+    var $cell = $(cell), 
+        score = this.getScore($cell);
+
+    if (Y.game.selectType($cell.attr('data-type'), score)) {
+      $cell.attr('disabled', true);
+      $cell.find('span').html(score);
+    }
+  },
+  resetCells: function () {
+    $('.sheet button').attr('disabled', null).find('span').html('');
   },
   setDie: function (index, number, dontRoll) {
     // don't roll selected die
@@ -175,6 +204,8 @@ Y.game = {
     // TODO: update "reroll" button to "roll"
     // TODO: update dice display (unselected)
     Y.board.resetDice();
+    Y.board.resetCells();
+    Y.board.updateTotalScores(0, 0, false);
   },
 
   isSelected: function(diceIndex) {
@@ -200,19 +231,25 @@ Y.game = {
   },
 
   selectType: function(type, score) {
-    this.totalScore += score;
-    if (type.startsWith("upper")) {
-      this.upperScore += score;
-      // check if upper has more than 63 and add 50
-      if (!this.hasUpperBonus && this.upperScore >= 63) {
-        this.hasUpperBonus = true;
-        this.totalScore += 50;
-        this.upperScore += 50;
+    if (this.rollCount > 0) {
+      this.totalScore += score;
+      if (type.startsWith("upper")) {
+        this.upperScore += score;
+        // check if upper has more than 63 and add 50
+        if (!this.hasUpperBonus && this.upperScore >= 63) {
+          this.hasUpperBonus = true;
+          this.totalScore += 50;
+          this.upperScore += 50;
+        }
       }
+      this.rollCount = 0;
+      Y.board.unselectAll();
+      Y.board.updateTotalScores(this.upperScore, this.totalScore, this.hasUpperBonus);
+      
+      return true;
     }
-    this.rollCount = 0;
-    // TODO: update dice display (unselected)
-    Y.board.unselectAll();
+
+    return false;
   },
 
   save: function() {
@@ -316,7 +353,7 @@ var getScores = function (states, usedTypes) {
 
   // 2 pairs
   if (pairs.length === 2) {
-    scores.push({type: "2pairs", score: pairs[0].score + pairs[1].score});
+    scores.push({type: "twopairs", score: pairs[0].score + pairs[1].score});
   }
 
   // straights

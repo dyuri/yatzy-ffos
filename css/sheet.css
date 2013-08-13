@@ -41,7 +41,29 @@ table.sheet tr.score td {
   color: #14a;
 }
 
+.sheet button[disabled] {
+  background: #eee;
+  color: #aaa;
+  border-color: #ccc;
+}
+
+.sheet button[disabled] span {
+  color: #1a4;
+}
+
 .sheet.rolling button:not([disabled]) span {
   display: none;
 }
 
+.sheet #upper_score i {
+  display: none;
+}
+
+.sheet.bonus #upper_score i {
+  display: inline-block;
+}
+
+.sheet .score td span {
+  float: right;
+  margin-right: 20px;
+}
