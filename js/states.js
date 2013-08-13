@@ -31,16 +31,48 @@ Y.init = function () {
   });
 
   // event handlers
-  $('#btn_roll').on('click', Y.game.roll.bind(Y.game));
-  $('#btn_new_game').on('click', Y.game.newGame.bind(Y.game));
-  $('.dice').on('click', 'button', function (e) {
-    var button = $(e.currentTarget);
-
-    Y.game.toggleDie(button.attr('data-die-index'));
-  }, this);
+  if ($.os.phone || $.os.tablet) {
+    $('#btn_roll').on('tap', Y.game.roll.bind(Y.game));
+    $('#btn_new_game').on('tap', Y.game.newGame.bind(Y.game));
+    $('.dice').on('tap', 'button', function (e) {
+      var button = $(e.currentTarget);
+      Y.game.toggleDie(button.attr('data-die-index'));
+    }, this);
+  } else {
+    $('#btn_roll').on('click', Y.game.roll.bind(Y.game));
+    $('#btn_new_game').on('click', Y.game.newGame.bind(Y.game));
+    $('.dice').on('click', 'button', function (e) {
+      var button = $(e.currentTarget);
+      Y.game.toggleDie(button.attr('data-die-index'));
+    }, this);
+  }
 };
 
 Y.board = {
+  showScores: function (scores) {
+    scores = scores || [];
+
+    $('.sheet button:not([disabled]) span').html('');
+
+    scores.forEach(function (s) {
+      var cell = $('.sheet button[data-type='+s.type+']:not([disabled])');
+
+      if (cell) {
+        cell.find('span').html(s.score);
+      } else {
+        console.warn('No cell for type: '+s.type);
+      }
+    }, this);
+  },
+  setRolling: function () {
+    var $sheet = $('.sheet');
+
+    $sheet.addClass('rolling');
+    setTimeout(function () { $sheet.removeClass('rolling'); }, 1000);
+  },
+  getRolling: function () {
+    return $('.sheet').hasClass('rolling');
+  },
   setDie: function (index, number, dontRoll) {
     // don't roll selected die
     if (this.isSelected(index)) {
@@ -61,8 +93,8 @@ Y.board = {
     }, this);
   },
   resetDice: function () {
-    this.setDice([0, 0, 0, 0, 0], true);
     this.unselectAll();
+    this.setDice([0, 0, 0, 0, 0], true);
   },
   unselectAll: function () {
     $('.dice button').removeClass('selected');
@@ -98,12 +130,11 @@ Y.game = {
   rollCount: 0,
   // upper bonus (50 if more than 63)
   hasUpperBonus: false, // TODO: can be in the dom
-  availableScores: [], // TODO: can be in the dom
 
   roll: function() {
     var i, states;
 
-    if (this.rollCount < 3) {
+    if (!Y.board.getRolling() && this.rollCount < 3) {
       // parallel for all dice?
       states = [];
       
@@ -117,13 +148,16 @@ Y.game = {
 
       // update dice displays
       Y.board.setDice(states);
+      Y.board.setRolling();
 
       // TODO: update "roll" button to "reroll" if rollcount > 0
+
       // don't use the actual states array, but a copy of it
       var scores = getScores(states.slice(0), this.usedTypes);
-      console.log(scores);
 
       // TODO: update available scores
+      Y.board.showScores(scores);
+
       this.rollCount += 1;
 
       return states;
@@ -321,6 +355,6 @@ var getScores = function (states, usedTypes) {
 };
 Y.getScores = getScores;
 
-}(window.yatzy, $));
+}(window.yatzy, window.Zepto));
 
 window.yatzy.init();
