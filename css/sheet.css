@@ -40,3 +40,8 @@ table.sheet tr.score td {
   font-size: .9em;
   color: #14a;
 }
+
+.sheet.rolling button:not([disabled]) span {
+  display: none;
+}
+
