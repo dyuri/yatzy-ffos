@@ -38,6 +38,9 @@ Y.init = function () {
       var button = $(e.currentTarget);
       Y.game.toggleDie(button.attr('data-die-index'));
     }, this);
+    $('.sheet').on('tap', 'button:not([disabled])', function (e) {
+      Y.board.selectCell(e.currentTarget);
+    });
   } else {
     $('#btn_roll').on('click', Y.game.roll.bind(Y.game));
     $('#btn_new_game').on('click', Y.game.newGame.bind(Y.game));
