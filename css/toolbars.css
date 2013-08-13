@@ -30,10 +30,6 @@
   margin: 0 1%;
 }
 
-[role="toolbar"] ul.dice li:nth-child(2) {
-  background: red;
-}
-
 [role="toolbar"] ul.menu li {
   float: left;
   width: 30%;

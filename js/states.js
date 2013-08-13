@@ -1,10 +1,59 @@
 window.yatzy = window.yatzy || {};
 
-(function (Y) {
+(function (Y, $) {
 // types:
 // upper1, upper2, upper3, upper4, upper5, upper6
 // kind2, kind3, kind4
 // 2pairs, smallSt, largeSt, chance, house, yatzy
+
+var random = function(min, max) {
+  min = min || 1;
+  max = max || 6;
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+Y.init = function () {
+  // create rollable dice
+  var roll = 'ROLL!'.split('');
+  $('ul.dice li').each(function (index, el) {
+    var button = $('<button id="die_'+index+'" data-die-index="'+index+'"><span>'+roll[index]+'</span></button>'),
+        i, j, dstra = [];
+
+    button.appendTo(el);
+
+    for (i = 0; i < 10; i++) {
+      for (j = 1; j <= 6; j++) {
+        dstra.push('<span>'+j+'</span>');
+      }
+    }
+
+    button.append(dstra.join(''));
+  });
+
+  // event handlers
+  $('#btn_roll').on('click', Y.game.roll.bind(Y.game));
+  $('#btn_new_game').on('click', Y.game.newGame.bind(Y.game));
+};
+
+Y.board = {
+  setDie: function (index, number, dontRoll) {
+    var r = dontRoll ? 0 : random(0, 9),
+        button = $('#die_'+index),
+        w = button.children().first().width();
+
+    button.attr('data-value', number);
+    // "roll" the die
+    button.css('text-indent', - (r * 6 + number) * w);
+  },
+  setDice: function (numbers, dontRoll) {
+    numbers.forEach(function (n, index) {
+      this.setDie(index, n, dontRoll);
+    }, this);
+  },
+  resetDice: function () {
+    this.setDice([0, 0, 0, 0, 0], true);
+  }
+};
 
 // TODO: maybe use html5 data api for attributes (Robi's idea)
 Y.game = { 
@@ -22,12 +71,6 @@ Y.game = {
   hasUpperBonus: false, // TODO: can be in the dom
   availableScores: [], // TODO: can be in the dom
 
-  random: function(min, max) {
-    min = min || 1;
-    max = max || 6;
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  },
-
   roll: function() {
     var i, states;
 
@@ -37,13 +80,15 @@ Y.game = {
       
       for (i = 0; i < 5; i++) {
         if (!this.isSelected(i)) {
-          states.push(this.random(1, 6));
+          states.push(random(1, 6));
         } else {
           states.push(this.states[i]);
         }
       }
 
-      // TODO: update dice displays
+      // update dice displays
+      Y.board.setDice(states);
+
       // TODO: update "roll" button to "reroll" if rollcount > 0
       // don't use the actual states array, but a copy of it
       var scores = getScores(states.slice(0), this.usedTypes);
@@ -70,6 +115,7 @@ Y.game = {
     this.hasUpperBonus = false;
     // TODO: update "reroll" button to "roll"
     // TODO: update dice display (unselected)
+    Y.board.resetDice();
   },
 
   isSelected: function(diceIndex) {
@@ -245,4 +291,6 @@ var getScores = function (states, usedTypes) {
 };
 Y.getScores = getScores;
 
-}(window.yatzy));
+}(window.yatzy, $));
+
+window.yatzy.init();
