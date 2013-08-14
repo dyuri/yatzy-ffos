@@ -152,11 +152,20 @@ Y.board = {
 
     var r = dontRoll ? 0 : random(0, 9),
         button = $('#die_'+index),
-        w = button.children().first().width();
+        w = button.children().first().width(),
+        indent = - (r * 6 + number) * w,
+        oldindent = parseInt(button.css('text-indent'), 10);
+
+    if (!dontRoll && indent === oldindent) {
+      while (indent === oldindent) {
+        r = random(0, 9);
+        indent = - (r * 6 + number) * w;
+      }
+    }
 
     button.attr('data-value', number);
     // "roll" the die
-    button.css('text-indent', - (r * 6 + number) * w);
+    button.css('text-indent', indent);
   },
   setDice: function (numbers, dontRoll) {
     numbers.forEach(function (n, index) {
