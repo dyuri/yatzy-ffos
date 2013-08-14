@@ -102,3 +102,10 @@ footer {
     bottom: 0;
 }
 
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
+}

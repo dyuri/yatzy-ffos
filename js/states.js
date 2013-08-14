@@ -34,6 +34,7 @@ Y.init = function () {
   if ($.os.phone || $.os.tablet) {
     $('#btn_roll').on('tap', Y.game.roll.bind(Y.game));
     $('#btn_new_game').on('tap', Y.game.newGame.bind(Y.game));
+    $('#btn_help').on('tap', Y.board.help.bind(Y.board));
     $('.dice').on('tap', 'button', function (e) {
       var button = $(e.currentTarget);
       Y.game.toggleDie(button.attr('data-die-index'));
@@ -44,6 +45,7 @@ Y.init = function () {
   } else {
     $('#btn_roll').on('click', Y.game.roll.bind(Y.game));
     $('#btn_new_game').on('click', Y.game.newGame.bind(Y.game));
+    $('#btn_help').on('click', Y.board.help.bind(Y.board));
     $('.dice').on('click', 'button', function (e) {
       var button = $(e.currentTarget);
       Y.game.toggleDie(button.attr('data-die-index'));
@@ -55,10 +57,44 @@ Y.init = function () {
 };
 
 Y.board = {
+  help: function () {
+    if (this.isActiveTab('help')) {
+      if (Y.game.checkGameOver()) {
+        this.showTab('gameover');
+      } else {       
+        this.showTab('board');
+      }
+    } else {
+      this.showTab('help');
+    }
+  },
+  gameOver: function (score) {
+    $('#go-score span').html(score);
+    this.showTab('gameover');
+  },
+  showTab: function (tab) {
+    var t = $('.tab-'+tab);
+
+    if (t && !t.hasClass('active')) {
+      $('.tab').removeClass('active');
+      t.addClass('active');
+    }
+  },
+  isActiveTab: function (tab) {
+    var t = $('.tab-'+tab);
+    
+    return t.hasClass('active');
+  },
+  updateRoll: function (rollCount) {
+    $('#btn_roll').attr('data-roll', rollCount);
+  },
+  clearScores: function () {
+    $('.sheet button:not([disabled]) span').html('');
+  },
   showScores: function (scores) {
     scores = scores || [];
 
-    $('.sheet button:not([disabled]) span').html('');
+    this.clearScores();
 
     scores.forEach(function (s) {
       var cell = $('.sheet button[data-type='+s.type+']:not([disabled])');
@@ -100,6 +136,9 @@ Y.board = {
     if (Y.game.selectType($cell.attr('data-type'), score)) {
       $cell.attr('disabled', true);
       $cell.find('span').html(score);
+      if (Y.game.checkGameOver()) {
+        Y.game.gameOver();
+      }
     }
   },
   resetCells: function () {
@@ -149,6 +188,26 @@ Y.board = {
   },
   unselectDie: function (i) {
     $('#die_'+i).removeClass('selected');
+  },
+  availableCells: function () {
+    var cells = $('.sheet button:not([disabled])'),
+        types = [];
+
+    cells.each(function (i, c) {
+      types.push($(c).attr('data-type'));
+    });
+
+    return types;
+  },
+  usedCells: function () {
+    var cells = $('.sheet button:[disabled]'),
+        types = [];
+
+    cells.each(function (i, c) {
+      types.push($(c).attr('data-type'));
+    });
+
+    return types;
   }
 };
 
@@ -182,15 +241,16 @@ Y.game = {
       Y.board.setDice(states);
       Y.board.setRolling();
 
-      // TODO: update "roll" button to "reroll" if rollcount > 0
-
       // don't use the actual states array, but a copy of it
       var scores = getScores(states.slice(0), this.usedTypes);
 
-      // TODO: update available scores
       Y.board.showScores(scores);
 
       this.rollCount += 1;
+      Y.board.updateRoll(this.rollCount);
+
+      // show board if it's hidden
+      Y.board.showTab('board');
 
       return states;
     }
@@ -204,11 +264,11 @@ Y.game = {
     this.totalScore = 0;
     this.rollCount = 0;
     this.hasUpperBonus = false;
-    // TODO: update "reroll" button to "roll"
-    // TODO: update dice display (unselected)
+    Y.board.updateRoll(this.rollCount);
     Y.board.resetDice();
     Y.board.resetCells();
     Y.board.updateTotalScores(0, 0, false);
+    Y.board.showTab('board');
   },
 
   isSelected: function(diceIndex) {
@@ -245,10 +305,32 @@ Y.game = {
           this.upperScore += 50;
         }
       }
+
       this.rollCount = 0;
+
       Y.board.unselectAll();
+      Y.board.clearScores();
       Y.board.updateTotalScores(this.upperScore, this.totalScore, this.hasUpperBonus);
-      
+      Y.board.updateRoll(this.rollCount);
+
+      return true;
+    }
+
+    return false;
+  },
+
+  gameOver: function () {
+    // TODO save score
+    Y.board.gameOver(this.totalScore);
+  },
+
+  checkGameOver: function () {
+    var availableTypes = Y.board.availableCells();
+
+    if (availableTypes.length === 0) {
+      this.rollCount = 3;
+      Y.board.updateRoll(this.rollCount);
+
       return true;
     }
 

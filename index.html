@@ -30,40 +30,54 @@
   </section>
 
   <div id="main">
-    <p id="installation-instructions">Press the + button in the top right corner to install this app.</p>
-    <table class="sheet">
-      <tr class="buttons">
-        <td><button id="sbtn_1" data-type="upper1">1 <span></span></button></td>
-        <td><button id="sbtn_2" data-type="upper2">2 <span></span></button></td>
-        <td><button id="sbtn_3" data-type="upper3">3 <span></span></button></td>
-      </tr>
-      <tr class="buttons">
-        <td><button id="sbtn_4" data-type="upper4">4 <span></span></button></td>
-        <td><button id="sbtn_5" data-type="upper5">5 <span></span></button></td>
-        <td><button id="sbtn_6" data-type="upper6">6 <span></span></button></td>
-      </tr>
-      <tr class="score">
-        <td colspan="3" id="upper_score">Upper score: <i>+bonus!</i> <span></span></td>
-      </tr>
-      <tr class="buttons">
-        <td><button id="sbtn_1p" data-type="kind2">1pair <span></span></button></td>
-        <td><button id="sbtn_2p" data-type="twopairs">2pairs <span></span></button></td>
-        <td><button id="sbtn_3aok" data-type="kind3">3aok <span></span></button></td>
-      </tr>
-      <tr class="buttons">
-        <td><button id="sbtn_4aok" data-type="kind4">4aok <span></span></button></td>
-        <td><button id="sbtn_ss" data-type="smallSt">ss <span></span></button></td>
-        <td><button id="sbtn_ls" data-type="largeSt">ls <span></span></button></td>
-      </tr>
-      <tr class="buttons">
-        <td><button id="sbtn_h" data-type="house">house <span></span></button></td>
-        <td><button id="sbtn_y" data-type="yatzy">yatzy <span></span></button></td>
-        <td><button id="sbtn_ch" data-type="chance">chance <span></span></button></td>
-      </tr>
-      <tr class="score">
-        <td colspan="3" id="total_score">Total score: <span></span></td>
-      </tr>
-    </table>
+    <div class="tab tab-welcome active">
+      <h1>Yatzy for Firefox</h1>
+      <p>loremipsum, meg ilyenek</p>
+      <p id="installation-instructions">Press the + button in the top right corner to install this app.</p>
+    </div>
+    <div class="tab tab-help">
+      <h1>Help</h1>
+      <a href="http://en.wikipedia.org/wiki/Yatzy">Yatzy on Wikipedia</a>
+    </div>
+    <div class="tab tab-gameover">
+      <h1>Game over</h1>
+      <h2 id="go-score">Total score: <span></span><h2>
+    </div>
+    <div class="tab tab-board">
+      <table class="sheet">
+        <tr class="buttons">
+          <td><button id="sbtn_1" data-type="upper1">1 <span></span></button></td>
+          <td><button id="sbtn_2" data-type="upper2">2 <span></span></button></td>
+          <td><button id="sbtn_3" data-type="upper3">3 <span></span></button></td>
+        </tr>
+        <tr class="buttons">
+          <td><button id="sbtn_4" data-type="upper4">4 <span></span></button></td>
+          <td><button id="sbtn_5" data-type="upper5">5 <span></span></button></td>
+          <td><button id="sbtn_6" data-type="upper6">6 <span></span></button></td>
+        </tr>
+        <tr class="score">
+          <td colspan="3" id="upper_score">Upper score: <i>+bonus!</i> <span></span></td>
+        </tr>
+        <tr class="buttons">
+          <td><button id="sbtn_1p" data-type="kind2">1pair <span></span></button></td>
+          <td><button id="sbtn_2p" data-type="twopairs">2pairs <span></span></button></td>
+          <td><button id="sbtn_3aok" data-type="kind3">3aok <span></span></button></td>
+        </tr>
+        <tr class="buttons">
+          <td><button id="sbtn_4aok" data-type="kind4">4aok <span></span></button></td>
+          <td><button id="sbtn_ss" data-type="smallSt">ss <span></span></button></td>
+          <td><button id="sbtn_ls" data-type="largeSt">ls <span></span></button></td>
+        </tr>
+        <tr class="buttons">
+          <td><button id="sbtn_h" data-type="house">house <span></span></button></td>
+          <td><button id="sbtn_y" data-type="yatzy">yatzy <span></span></button></td>
+          <td><button id="sbtn_ch" data-type="chance">chance <span></span></button></td>
+        </tr>
+        <tr class="score">
+          <td colspan="3" id="total_score">Total score: <span></span></td>
+        </tr>
+      </table>
+    </div>
   </div>
 
   <footer>

@@ -41,6 +41,20 @@ a.recommend[role="button"]:active  {
   color: #333;
 }
 
+/* Roll */
+#btn_roll[data-roll="0"] {
+  color: #eeb;
+}
+
+#btn_roll[data-roll="1"],
+#btn_roll[data-roll="2"] {
+  color: #aaa;
+}
+
+#btn_roll[data-roll="3"] {
+  color: #333;
+}
+
 /* Recommend */
 button.recommend,
 a[role="button"].recommend {
