@@ -236,7 +236,7 @@ Y.game = {
   selectType: function(type, score) {
     if (this.rollCount > 0) {
       this.totalScore += score;
-      if (type.startsWith("upper")) {
+      if (type.indexOf("upper") === 0) {
         this.upperScore += score;
         // check if upper has more than 63 and add 50
         if (!this.hasUpperBonus && this.upperScore >= 63) {
