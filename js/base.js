@@ -1,3 +1,4 @@
+(function () {
 // Install app
 if (navigator.mozApps) {
     var checkIfInstalled = navigator.mozApps.getSelf();
@@ -29,10 +30,4 @@ else {
     console.log("Open Web Apps not supported");
 }
 
-// Reload content
-var reload = document.querySelector("#reload");
-if (reload) {
-    reload.onclick = function () {
-        location.reload(true);
-    };
-}
+}());

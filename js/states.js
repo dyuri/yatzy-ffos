@@ -14,6 +14,7 @@ var random = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
+
 Y.init = function () {
   // create rollable dice
   var roll = 'ROLL!'.split('');
@@ -32,9 +33,14 @@ Y.init = function () {
     button.append(dstra.join(''));
   });
 
+  // lock orientation
+  var locked = window.screen && (window.screen.lockOrientation && window.screen.lockOrientation('portrait-primary')) || (window.screen.mozLockOrientation && window.screen.mozLockOrientation('portrait-primary'));
+
   // event handlers
   if ($.os.phone || $.os.tablet) {
     $('#btn_roll').on('tap', Y.game.roll.bind(Y.game));
+    $('[role="toolbar"] .dice').on('swipeLeft', Y.game.roll.bind(Y.game));
+    $('[role="toolbar"] .dice').on('swipeRight', Y.game.roll.bind(Y.game));
     $('#btn_new_game').on('tap', Y.game.newGame.bind(Y.game));
     $('#btn_help').on('tap', Y.board.help.bind(Y.board));
     $('.dice').on('tap', 'button', function (e) {
@@ -59,6 +65,13 @@ Y.init = function () {
 };
 
 Y.board = {
+  vibrate: function (time) {
+    time = time || 100;
+
+    if (navigator.vibrate) {
+      navigator.vibrate(time);
+    }
+  },
   help: function () {
     if (this.isActiveTab('help')) {
       if (Y.game.checkGameOver()) {
@@ -85,6 +98,7 @@ Y.board = {
       $hsul.append('<li class="'+(i === inhs ? 'current' : '')+'"><span class="date">'+d.toDateString()+'</span><span class="score">'+el.score+'</span></li>');
     });
     this.showTab('gameover');
+    this.vibrate([100, 200, 100, 200, 100]);
   },
   showTab: function (tab) {
     var t = $('.tab-'+tab);
