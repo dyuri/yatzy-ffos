@@ -209,7 +209,7 @@ Y.board = {
     return types;
   },
   usedCells: function () {
-    var cells = $('.sheet button:[disabled]'),
+    var cells = $('.sheet button[disabled]'),
         types = [];
 
     cells.each(function (i, c) {
@@ -223,7 +223,6 @@ Y.board = {
 // TODO: maybe use html5 data api for attributes (Robi's idea)
 Y.game = { 
   // types, that have been checked
-  usedTypes: [], // TODO: can be in the dom
   upperScore: 0, // TODO: can be document.getElementById("upperScore")
   totalScore: 0, // TODO: can be document.getElementById("totalScore")
   // 3 rolls in a turn
@@ -251,7 +250,7 @@ Y.game = {
       Y.board.setRolling();
 
       // don't use the actual states array, but a copy of it
-      var scores = getScores(states.slice(0), this.usedTypes);
+      var scores = getScores(states.slice(0), Y.board.usedCells());
 
       Y.board.showScores(scores);
 
@@ -268,7 +267,6 @@ Y.game = {
   },
 
   newGame: function() {
-    this.usedTypes = [];
     this.upperScore = 0;
     this.totalScore = 0;
     this.rollCount = 0;
