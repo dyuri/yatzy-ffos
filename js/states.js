@@ -363,7 +363,7 @@ Y.game = {
         now = new Date(),
         currentIndex = null;
 
-    if (!ohs.length) {
+    if (!ohs && !ohs.length) {
       ohs = [];
     }
 
@@ -400,11 +400,11 @@ Y.game = {
     if (window.localStorage) {
       try {
         // load highscores from localstorage
-        return JSON.parse(window.localStorage.getItem('highScores'));
+        return JSON.parse(window.localStorage.getItem('highScores') || "[]");
       } catch (e) {}
     }
 
-    return null;
+    return [];
   }
 };
 
