@@ -50,6 +50,7 @@ Y.init = function () {
     $('.sheet').on('tap', 'button:not([disabled])', function (e) {
       Y.board.selectCell(e.currentTarget);
     });
+    Y.shakeCheck.startCheck();
   } else {
     $('#btn_roll').on('click', Y.game.roll.bind(Y.game));
     $('#btn_new_game').on('click', Y.game.newGame.bind(Y.game));
@@ -62,6 +63,25 @@ Y.init = function () {
       Y.board.selectCell(e.currentTarget);
     });
   }
+};
+
+Y.shakeCheck = {
+  lastRot: null,
+  startCheck: function () {
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener("deviceorientation", function (e) {
+        var rot = Math.pow((Math.abs(e.alpha) * Math.abs(e.beta) * Math.abs(e.gamma)), 1/3);
+        if (this.lastRot !== null) {
+          if (Math.min(Math.abs(rot - this.lastRot) % 360, Math.abs(this.lastRot - rot) % 360) > 60) {
+            Y.game.roll();
+          }
+        }
+        this.lastRot = rot;
+      }.bind(this));
+    }
+  },
+  doCheck: function () {
+  },
 };
 
 Y.board = {
@@ -257,11 +277,20 @@ Y.game = {
   hasUpperBonus: false, // TODO: can be in the dom
   // 3 rolls in a turn
   rollCount: 0,
+  // don't roll before this time
+  minNextRoll: 0,
 
+  setNextRoll: function (delay) {
+    var t = new Date().getTime();
+
+    delay = delay || 100;
+
+    this.minNextRoll = t + delay;
+  },
   roll: function() {
-    var i, states;
+    var i, states, t = new Date().getTime();
 
-    if (!Y.board.getRolling() && this.rollCount < 3) {
+    if (!Y.board.getRolling() && (this.minNextRoll < t) && this.rollCount < 3) {
       // parallel for all dice?
       states = [];
       
@@ -287,6 +316,9 @@ Y.game = {
 
       // show board if it's hidden
       Y.board.showTab('board');
+
+      // delay next roll
+      this.setNextRoll(500);
 
       return states;
     }
@@ -317,6 +349,9 @@ Y.game = {
       } else {
         this.selectDie(diceIndex);
       }
+      
+      // delay next roll a bit to prevent accidental rolls
+      this.setNextRoll(100);
     }
   },
 
