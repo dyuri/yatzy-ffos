@@ -6,6 +6,8 @@ window.yatzy = window.yatzy || {};
 // kind2, kind3, kind4
 // twopairs, smallSt, largeSt, chance, house, yatzy
 
+var MAX_HIGHSCORES = 10;
+
 var random = function(min, max) {
   min = min || 1;
   max = max || 6;
@@ -68,8 +70,20 @@ Y.board = {
       this.showTab('help');
     }
   },
-  gameOver: function (score) {
+  gameOver: function (score, hslist, inhs) {
+    var $hsul = $('#highscores');
+
     $('#go-score span').html(score);
+    if (inhs < MAX_HIGHSCORES) {
+      $('#inhs').css('display', 'block');
+    } else {
+      $('#inhs').css('display', 'none');
+    }
+    $hsul.html('');
+    hslist.forEach(function (el, i) {
+      var d = new Date(el.date);
+      $hsul.append('<li class="'+(i === inhs ? 'current' : '')+'"><span class="date">'+d.toDateString()+'</span><span class="score">'+el.score+'</span></li>');
+    });
     this.showTab('gameover');
   },
   showTab: function (tab) {
@@ -225,10 +239,10 @@ Y.game = {
   // types, that have been checked
   upperScore: 0, // TODO: can be document.getElementById("upperScore")
   totalScore: 0, // TODO: can be document.getElementById("totalScore")
-  // 3 rolls in a turn
-  rollCount: 0,
   // upper bonus (50 if more than 63)
   hasUpperBonus: false, // TODO: can be in the dom
+  // 3 rolls in a turn
+  rollCount: 0,
 
   roll: function() {
     var i, states;
@@ -327,8 +341,8 @@ Y.game = {
   },
 
   gameOver: function () {
-    // TODO save score
-    Y.board.gameOver(this.totalScore);
+    var hs = this.getHighScores();
+    Y.board.gameOver(this.totalScore, hs.list, hs.currentIn);
   },
 
   checkGameOver: function () {
@@ -344,10 +358,53 @@ Y.game = {
     return false;
   },
 
-  save: function() {
+  getHighScores: function () {
+    var ohs = this.loadHighScores(),
+        now = new Date(),
+        currentIndex = null;
+
+    if (!ohs.length) {
+      ohs = [];
+    }
+
+    ohs.forEach(function (el, i) {
+      if (currentIndex === null && el.score <= this.totalScore) {
+        currentIndex = i;
+      }
+    }, this);
+
+    if (currentIndex === null) {
+      currentIndex = ohs.length;
+    }
+
+    // add current score to list
+    ohs.splice(currentIndex, 0, {score: this.totalScore, date: now});
+    // truncate list to max
+    ohs.splice(MAX_HIGHSCORES, Number.MAX_VALUE);
+
+    // save list
+    this.saveHighScores(ohs);
+
+    // is current score in the highsceres?
+    return {list: ohs, currentIn: currentIndex};
   },
 
-  load: function() {
+  saveHighScores: function(highScores) {
+    if (window.localStorage) {
+      // save highscores to localstorage
+      window.localStorage.setItem('highScores', JSON.stringify(highScores));
+    }
+  },
+
+  loadHighScores: function() {
+    if (window.localStorage) {
+      try {
+        // load highscores from localstorage
+        return JSON.parse(window.localStorage.getItem('highScores'));
+      } catch (e) {}
+    }
+
+    return null;
   }
 };
 
