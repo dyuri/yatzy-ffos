@@ -109,3 +109,18 @@ footer {
 .tab.active {
   display: block;
 }
+
+/* top ten */
+#highscores li {
+  overflow: hidden;
+}
+
+#highscores li .score {
+  float: right;
+  font-size: 1.2em;
+  margin-right: 1em;
+}
+
+#highscores li.current {
+  font-weight: bold;
+}
