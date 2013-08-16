@@ -70,7 +70,9 @@ Y.player = {
   setName: function (name) { this.name = name; },
   // cells: {type, score}
   getBoard: function () {
-    return this.board || {};
+    this.board = this.board || {};
+
+    return this.board;
   },
   setCell: function (type, score) {
     this.getBoard()[type] = score;
@@ -93,6 +95,7 @@ Y.player = {
     this.setUpperScore(0);
     this.setTotalScore(0);
     this.hasUpperBonus(false);
+    this.board = {};
   }
 };
 
@@ -222,6 +225,19 @@ Y.board = {
   },
   resetCells: function () {
     $('.sheet button').attr('disabled', null).find('span').html('');
+  },
+  setCells: function (cells) {
+    this.resetCells();
+    
+    Object.keys(cells).forEach(function (c) {
+      var cell = $('.sheet button[data-type='+c+']');
+
+      if (cell) {
+        cell.attr('disabled', true).find('span').html(cells[c]);
+      } else {
+        console.warn('No cell for type: '+c);
+      }
+    }, this);
   },
   setDie: function (index, number, dontRoll) {
     // don't roll selected die
@@ -404,6 +420,7 @@ Y.game = {
 
     if (this.rollCount > 0) {
       p.addTotalScore(score);
+      p.setCell(type, score);
       if (type.indexOf("upper") === 0) {
         p.addUpperScore(score);
         // check if upper has more than 63 and add 50
