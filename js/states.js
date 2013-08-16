@@ -65,6 +65,37 @@ Y.init = function () {
   }
 };
 
+Y.player = {
+  getName: function () { return this.name || "Player"; },
+  setName: function (name) { this.name = name; },
+  // cells: {type, score}
+  getBoard: function () {
+    return this.board || {};
+  },
+  setCell: function (type, score) {
+    this.getBoard()[type] = score;
+  },
+  getUpperScore: function () { return this.upperScore || 0; },
+  setUpperScore: function (score) { this.upperScore = score; },
+  addUpperScore: function (score) { this.upperScore = this.getUpperScore() + score; },
+  getTotalScore: function () { return this.totalScore || 0; },
+  setTotalScore: function (score) { this.totalScore = score; },
+  addTotalScore: function (score) { this.totalScore = this.getTotalScore() + score; },
+  // upper bonus (50 if more than 63)
+  hasUpperBonus: function (setBonus) {
+    if (typeof setBonus !== 'undefined') {
+      this.hasBonus = setBonus;
+    }
+
+    return this.hasBonus || false;
+  },
+  reset: function () {
+    this.setUpperScore(0);
+    this.setTimeout(0);
+    this.hasUpperBonus(false);
+  }
+};
+
 Y.shakeCheck = {
   lastRot: null,
   startCheck: function () {
@@ -270,11 +301,8 @@ Y.board = {
 
 // TODO: maybe use html5 data api for attributes (Robi's idea)
 Y.game = { 
-  // types, that have been checked
-  upperScore: 0, // TODO: can be document.getElementById("upperScore")
-  totalScore: 0, // TODO: can be document.getElementById("totalScore")
-  // upper bonus (50 if more than 63)
-  hasUpperBonus: false, // TODO: can be in the dom
+  // current player
+  currentPlayer: null,
   // 3 rolls in a turn
   rollCount: 0,
   // don't roll before this time
@@ -286,6 +314,13 @@ Y.game = {
     delay = delay || 100;
 
     this.minNextRoll = t + delay;
+  },
+  getPlayer: function (getNew) {
+    if (getNew || !this.currentPlayer) {
+      this.currentPlayer = Object.create(Y.player);
+    }
+
+    return this.currentPlayer;
   },
   roll: function() {
     var i, states, t = new Date().getTime();
@@ -327,10 +362,11 @@ Y.game = {
   },
 
   newGame: function() {
-    this.upperScore = 0;
-    this.totalScore = 0;
+    var p = this.getPlayer();
+
+    p.reset();
+
     this.rollCount = 0;
-    this.hasUpperBonus = false;
     Y.board.updateRoll(this.rollCount);
     Y.board.resetDice();
     Y.board.resetCells();
@@ -364,15 +400,17 @@ Y.game = {
   },
 
   selectType: function(type, score) {
+    var p = this.getPlayer();
+
     if (this.rollCount > 0) {
-      this.totalScore += score;
+      p.addTotalScore(score);
       if (type.indexOf("upper") === 0) {
-        this.upperScore += score;
+        p.addUpperScore(score);
         // check if upper has more than 63 and add 50
-        if (!this.hasUpperBonus && this.upperScore >= 63) {
-          this.hasUpperBonus = true;
-          this.totalScore += 50;
-          this.upperScore += 50;
+        if (!p.hasUpperBonus() && p.getUpperScore() >= 63) {
+          p.hasUpperBonus(true);
+          p.addTotalScore(50);
+          p.addUpperScore(50);
         }
       }
 
@@ -380,7 +418,7 @@ Y.game = {
 
       Y.board.unselectAll();
       Y.board.clearScores();
-      Y.board.updateTotalScores(this.upperScore, this.totalScore, this.hasUpperBonus);
+      Y.board.updateTotalScores(p.getUpperScore(), p.getTotalScore(), p.hasUpperBonus());
       Y.board.updateRoll(this.rollCount);
 
       return true;
@@ -390,8 +428,10 @@ Y.game = {
   },
 
   gameOver: function () {
-    var hs = this.getHighScores();
-    Y.board.gameOver(this.totalScore, hs.list, hs.currentIn);
+    var hs = this.getHighScores(),
+        p = this.getPlayer();
+
+    Y.board.gameOver(p.getTotalScore(), hs.list, hs.currentIn);
   },
 
   checkGameOver: function () {
@@ -410,14 +450,15 @@ Y.game = {
   getHighScores: function () {
     var ohs = this.loadHighScores(),
         now = new Date(),
-        currentIndex = null;
+        currentIndex = null,
+        p = this.getPlayer();
 
     if (!ohs && !ohs.length) {
       ohs = [];
     }
 
     ohs.forEach(function (el, i) {
-      if (currentIndex === null && el.score <= this.totalScore) {
+      if (currentIndex === null && el.score <= p.getTotalScore()) {
         currentIndex = i;
       }
     }, this);
@@ -427,7 +468,7 @@ Y.game = {
     }
 
     // add current score to list
-    ohs.splice(currentIndex, 0, {score: this.totalScore, date: now});
+    ohs.splice(currentIndex, 0, {score: p.getTotalScore(), date: now});
     // truncate list to max
     ohs.splice(MAX_HIGHSCORES, Number.MAX_VALUE);
 
