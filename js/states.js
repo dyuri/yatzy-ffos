@@ -91,7 +91,7 @@ Y.player = {
   },
   reset: function () {
     this.setUpperScore(0);
-    this.setTimeout(0);
+    this.setTotalScore(0);
     this.hasUpperBonus(false);
   }
 };
