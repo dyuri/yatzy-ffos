@@ -42,6 +42,7 @@ Y.init = function () {
     $('[role="toolbar"] .dice').on('swipeLeft', Y.game.roll.bind(Y.game));
     $('[role="toolbar"] .dice').on('swipeRight', Y.game.roll.bind(Y.game));
     $('#btn_new_game').on('tap', Y.game.newGame.bind(Y.game));
+    $('#main button.startnew').on('tap', Y.game.newGame.bind(Y.game));
     $('#btn_help').on('tap', Y.board.help.bind(Y.board));
     $('.dice').on('tap', 'button', function (e) {
       var button = $(e.currentTarget);
@@ -54,6 +55,7 @@ Y.init = function () {
   } else {
     $('#btn_roll').on('click', Y.game.roll.bind(Y.game));
     $('#btn_new_game').on('click', Y.game.newGame.bind(Y.game));
+    $('#main button.startnew').on('click', Y.game.newGame.bind(Y.game));
     $('#btn_help').on('click', Y.board.help.bind(Y.board));
     $('.dice').on('click', 'button', function (e) {
       var button = $(e.currentTarget);

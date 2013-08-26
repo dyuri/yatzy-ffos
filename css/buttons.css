@@ -41,10 +41,45 @@ a.recommend[role="button"]:active  {
   color: #333;
 }
 
+
+@-webkit-keyframes pulse {      
+  0%    { opacity: .5; }
+  50%   { opacity: 1; }
+  100%  { opacity: .5; }
+}
+
+@-o-keyframes pulse {      
+  0%    { opacity: .5; }
+  50%   { opacity: 1; }
+  100%  { opacity: .5; }
+}
+
+@-moz-keyframes pulse {      
+  0%    { opacity: .5; }
+  50%   { opacity: 1; }
+  100%  { opacity: .5; }
+}
+
+@keyframes pulse {      
+  0%    { opacity: .5; }
+  50%   { opacity: 1; }
+  100%  { opacity: .5; }
+}
+
+
+
+
 /* Roll */
 #btn_roll[data-roll="0"] {
-  color: #eeb;
+  color: #fff;
+  background: rgba(0,255,0,.5);
+  -webkit-animation: pulse 2s infinite;
+  -o-animation: pulse 2s infinite;
+  -moz-animation: pulse 2s infinite;
+  animation: pulse 2s infinite;
+
 }
+
 
 #btn_roll[data-roll="1"],
 #btn_roll[data-roll="2"] {
@@ -52,7 +87,10 @@ a.recommend[role="button"]:active  {
 }
 
 #btn_roll[data-roll="3"] {
-  color: #333;
+  color: rgba(255,255,255,.2);
+  text-shadow: none;
+  background: rgba(0,0,0,.1);
+  box-shadow: none;
 }
 
 /* Recommend */

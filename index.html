@@ -23,20 +23,24 @@
       <menu type="toolbar">
         <button id="install"><span class="icon icon-add">add</span></button>
       </menu>
-      <h1>
-        Yatzy
-      </h1>
+      <img src="images/logosmogo.png" />
+
     </header>
   </section>
 
   <div id="main">
     <div class="tab tab-welcome active">
-      <h1>Yatzy for Firefox</h1>
-      <p>loremipsum, meg ilyenek</p>
+      <img src="images/logosmogo.png" class="slogo" />
+      <button class="startnew">Start New Game</button>
       <p id="installation-instructions">Press the + button in the top right corner to install this app.</p>
     </div>
     <div class="tab tab-help">
-      <h1>Help</h1>
+      <h1>How to Play</h1>
+      <p class="lead">Yatzy can be played solitaire or by any number players. Players take turns rolling five dice. After each roll, the player chooses which dice to keep, and which to reroll. A player may reroll some or all of the dice up to two times on a turn. The player with the highest total score wins the game.</p>
+      <h2>Scoring system</h2>
+      <p>Praesent ac vulputate odio. Praesent adipiscing est luctus augue fringilla, eu laoreet nisl tempus. Etiam sollicitudin leo metus, eget sollicitudin augue imperdiet sed. Aliquam ultrices ligula tortor, nec tempor augue tristique ac.</p>
+      <h2>Other good things to know</h2>
+      <p>Nulla eu quam ante. Integer tellus ante, vestibulum sed tincidunt nec, semper vitae augue. Vestibulum volutpat consequat sem eget consectetur.</p>
       <a href="http://en.wikipedia.org/wiki/Yatzy">Yatzy on Wikipedia</a>
     </div>
     <div class="tab tab-gameover">
@@ -58,7 +62,7 @@
           <td><button id="sbtn_6" data-type="upper6">6 <span></span></button></td>
         </tr>
         <tr class="score">
-          <td colspan="3" id="upper_score">Upper score: <i>+bonus!</i> <span></span></td>
+          <td colspan="3" id="upper_score"><hr />Upper score: <i>+bonus!</i> <span></span></td>
         </tr>
         <tr class="buttons">
           <td><button id="sbtn_1p" data-type="kind2">1pair <span></span></button></td>
@@ -76,7 +80,7 @@
           <td><button id="sbtn_ch" data-type="chance">chance <span></span></button></td>
         </tr>
         <tr class="score">
-          <td colspan="3" id="total_score">Total score: <span></span></td>
+          <td colspan="3" id="total_score"><hr />Total score: <span></span></td>
         </tr>
       </table>
     </div>
