@@ -73,12 +73,10 @@ a.recommend[role="button"]:active  {
 #btn_roll[data-roll="0"] {
   color: #fff;
   background: rgba(0,255,0,.5);
-/*  
   -webkit-animation: pulse 2s infinite;
   -o-animation: pulse 2s infinite;
   -moz-animation: pulse 2s infinite;
   animation: pulse 2s infinite;
-*/
 }
 
 
