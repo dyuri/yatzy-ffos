@@ -26,7 +26,7 @@ a[role="button"] {
   font: 400 1.6rem/3.8rem 'MozTT', Sans-serif;
   color: #333;
   text-align: center;
-  text-shadow: 0.1rem 0.1rem 0 rgba(255,255,255,0.3);
+  /*text-shadow: 0.1rem 0.1rem 0 rgba(255,255,255,0.3);*/
   text-decoration: none;
   outline: none;
 }
@@ -84,7 +84,7 @@ a.recommend[role="button"]:active  {
 
 #btn_roll[data-roll="1"],
 #btn_roll[data-roll="2"] {
-  color: #aaa;
+  color: rgba(0,255,0,.75);
 }
 
 #btn_roll[data-roll="3"] {
