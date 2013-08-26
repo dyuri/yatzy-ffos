@@ -117,7 +117,7 @@ Y.board = {
     $hsul.html('');
     hslist.forEach(function (el, i) {
       var d = new Date(el.date);
-      $hsul.append('<li class="'+(i === inhs ? 'current' : '')+'"><span class="date">'+d.toDateString()+'</span><span class="score">'+el.score+'</span></li>');
+      $hsul.append('<li class="'+(i === inhs ? 'current' : '')+'"><span class="date">'+d.toLocaleString()+'</span><span class="score">'+el.score+'</span></li>');
     });
     this.showTab('gameover');
     this.vibrate([100, 200, 100, 200, 100]);

@@ -114,7 +114,8 @@ footer {
 
 /* top ten */
 #highscores li {
-  overflow: hidden;
+  line-height: 17px;
+  text-align: left;
 }
 
 #highscores li .score {
