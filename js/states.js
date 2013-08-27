@@ -39,8 +39,9 @@ Y.init = function () {
   // event handlers
   if ($.os.phone || $.os.tablet) {
     $('#btn_roll').on('tap', Y.game.roll.bind(Y.game));
-    $('[role="toolbar"] .dice').on('swipeLeft', Y.game.roll.bind(Y.game));
-    $('[role="toolbar"] .dice').on('swipeRight', Y.game.roll.bind(Y.game));
+    // swipe disabled, too sensitive
+    // $('[role="toolbar"] .dice').on('swipeLeft', Y.game.roll.bind(Y.game));
+    // $('[role="toolbar"] .dice').on('swipeRight', Y.game.roll.bind(Y.game));
     $('#btn_new_game').on('tap', Y.game.newGame.bind(Y.game));
     $('#main button.startnew').on('tap', Y.game.newGame.bind(Y.game));
     $('#btn_help').on('tap', Y.board.help.bind(Y.board));
