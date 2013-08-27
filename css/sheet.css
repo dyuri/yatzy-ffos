@@ -121,6 +121,18 @@ h2 {
   display: block;
 }
 
+.tab-help ul {
+  text-align: left;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 200;
+  line-height: 18px;
+}
+
+.tab-help ul li {
+  margin-top: 5px;
+}
+
 .tab-help h2 {
   padding: 2em 0 0 0;
 }
