@@ -36,17 +36,60 @@
     </div>
     <div class="tab tab-help">
       <h1>How to Play</h1>
-      <p class="lead">Yatzy can be played solitaire or by any number players. Players take turns rolling five dice. After each roll, the player chooses which dice to keep, and which to reroll. A player may reroll some or all of the dice up to two times on a turn. The player with the highest total score wins the game.</p>
+      <p class="lead">Yatzy can be played solitaire or by any number players. Players take turns rolling five dice. After each roll, the player chooses which dice to keep, and which to reroll. A player may reroll some or all of the dice up to two times on a turn. The player with the highest total score wins the game. After each round (3 rolls / round) points must be entered into a table.</p>
       <h2>Scoring system</h2>
-      <p>Praesent ac vulputate odio. Praesent adipiscing est luctus augue fringilla, eu laoreet nisl tempus. Etiam sollicitudin leo metus, eget sollicitudin augue imperdiet sed. Aliquam ultrices ligula tortor, nec tempor augue tristique ac.</p>
+      <p>
+      The following combinations earn points:
+      </p>
+
+      <p>
+      Upper Section:
+      </p>
+
+      <ul>
+        <li><i>Ones:</i> The sum of all dice showing the number 1.</li>
+        <li><i>Twos:</i> The sum of all dice showing the number 2.</li>
+        <li><i>Threes:</i> The sum of all dice showing the number 3.</li>
+        <li><i>Fours:</i> The sum of all dice showing the number 4.</li>
+        <li><i>Fives:</i> The sum of all dice showing the number 5.</li>
+        <li><i>Sixes:</i> The sum of all dice showing the number 6.</li>
+      </ul>
+
+      <p>
+      Lower Section:
+      </p>
+
+      <ul>
+        <li><i>One Pair:</i> Two dice showing the same number. Score: Sum of those two dice.</li>
+        <li><i>Two Pairs:</i> Two pairs of dice. Score: Sum of dice in those two pairs.</li>
+        <li><i>Three of a Kind:</i> Three dice showing the same number. Score: Sum of those three dice.</li>
+        <li><i>Four of a Kind:</i> Four dice with the same number. Score: Sum of those four dice.</li>
+        <li><i>Small Straight:</i> The combination 1, 2, 3, 4, 5. Score: 15 points (sum of all the dice).</li>
+        <li><i>Large Straight:</i> The combination 2, 3, 4, 5, 6. Score: 20 points (sum of all the dice).</li>
+        <li><i>House:</i> Any set of three combined with a set of two. Score: Sum of all the dice.</li>
+        <li><i>Yatzy:</i> All five dice with the same number. Score: 50 points.</li>
+        <li><i>Chance:</i> Any combination of dice. Score: Sum of all the dice.</li>
+        <li><i>Bonus:</i> If a player manages to score at least 63 points (three of each number) in the upper section, they are awarded a bonus of 50 points (in some instances 25 or 35).</li>
+      </ul>
+
+      <p>
+      </p>
       <h2>Other good things to know</h2>
-      <p>Nulla eu quam ante. Integer tellus ante, vestibulum sed tincidunt nec, semper vitae augue. Vestibulum volutpat consequat sem eget consectetur.</p>
+      <ul>
+        <li>You should generally aim for the 35 points bonus by filling the upper section with high scores (so as to get at least 63 points) near the beginning of the game.</li>
+        <li>If you roll a combination for which your available boxes give a low score, fill in a zero in the 1's box (or even the 2's or 3's), since high scores in the other boxes may compensate for this.</li>
+        <li>Early in the game you should use the chance box only as a fall-back for when you are trying for a high point combination and fail. You want to keep the chance box available for a situation where your options are very limited.</li>
+        <li>If you have a bad roll of the dice near the end of the game, you may enter a zero in the Yahtzee box or one of the other difficult combinations.</li>
+        <li>If you roll a pair of 1's or 2's early in the game, go for a full house, straight, or one of the other high numbers you rolled. Keeping the 1's or 2's to seek a 3 or 4 of a kind will not get you many points. Plus, it is a good idea to keep the 1's and 2's boxes available for later in the game to have the possibility of putting a zero there. As an example, if on your first turn your initial roll is 1 1 2 5 6, it turns out that keeping only the 5 is the choice that maximizes your expected score for the game.</li>
+        <li>If you roll four of a kind with 4's, 5's, or 6's, take the points in the upper section if they are available, not in the 4 of a kind box. This will help you get the 35 points bonus at the end of the game.</li>
+        <li>You should always try for a Yahtzee early in the game. If you roll a 3 or 4 of a kind on your first or second roll and you have the corresponding box in the upper section open, you should definitely go for the Yahtzee. Plus, if you saved your chance, 1's, or 2's boxes, you can score a zero there if you fail to get the Yahtzee."</li>
+      </ul>
       <a href="http://en.wikipedia.org/wiki/Yatzy">Yatzy on Wikipedia</a>
     </div>
     <div class="tab tab-gameover">
       <h1>Game over</h1>
       <h2 id="go-score">Total score: <span></span></h2>
-      <p id="inhs">Congratulation, you made it into the TOP TEN!</p>
+      <p id="inhs"><!--Congratulations, you made it into the TOP TEN!--></p>
       <ol id="highscores"></ol>
     </div>
     <div class="tab tab-board">
