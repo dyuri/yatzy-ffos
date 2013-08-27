@@ -1,5 +1,5 @@
 {
-    "version": "1",
+    "version": "1.0",
     "name": "Yatzy",
     "launch_path": "/index.html",
     "description": "Yatzy, the dice game",
@@ -12,7 +12,7 @@
     },
     "developer": {
         "name": "iMind & EuEdge",
-        "url": "http://euedge.com"
+        "url": "http://yatzy.imind.hu/"
     },
     "installs_allowed_from": ["*"],
     "default_locale": "en"
