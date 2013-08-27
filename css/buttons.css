@@ -70,6 +70,33 @@ a.recommend[role="button"]:active  {
 
 
 /* Roll */
+#btn_roll span {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  line-height: 8px;
+  font-size: 6px;
+}
+
+#btn_roll span i {
+  display: inline-block;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 5px;
+  height: 5px;
+  margin: 0 4px;
+  background: rgb(255,255,255);
+}
+
+#btn_roll[data-roll="1"] i.r3,
+#btn_roll[data-roll="2"] i.r2,
+#btn_roll[data-roll="2"] i.r3,
+#btn_roll[data-roll="3"] i {
+  background: rgba(255,255,255,.2);
+}
+
+
 #btn_roll[data-roll="0"] {
   color: #fff;
   background: rgba(0,255,0,.5);
