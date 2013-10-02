@@ -1,31 +1,3 @@
-- kezdokepernyon nincsen tablazat es dicebar
-- new gombra uj jatek kezdodik
-- fordulo akkor kezdodik ha dobunk a kockakkal
-- forduloban kijelolhet kockakat
-- forduloban 2x ujradobhat a nem lockolt kockakkal 
-- forduloban kijelolhet tablazat elemet
-- a kontextusfuggo roll gombra dobunk kockakkal
-- fordulo addig tart amig be nem irunk valamit a tablazatba
-- fordulo vegen felengedunk minden lockolt kockat
-- egy jatek addig tart, amig van ures mezo
----
+This is our (iMind & EU Edge) first experiment with Firefox OS.
 
-* kezdokepernyo/eredmenytablazat
-* uj jatek
-    * kockadobas
-    * fordulo
-        * lockolas
-        * ujradobas
-        * fordulo lezarasa (tablazatba iras)
-    * eredmeny szamolasa
-    * jatek lezarasa ellenorzes
-    * jatek mentese
----
-    
-tech:
-
-* esetleg zepto
-* <meta name="viewport" content="width=device-width">
-* hg a bitbucketen: https://szotyi@bitbucket.org/dyuri/yatzy-ffos
-* valahova deployolunk
-* csak dev verzio van
+Yatzy can be played solitaire or by any number players. Players take turns rolling five dice. After each roll, the player chooses which dice to keep, and which to reroll. A player may reroll some or all of the dice up to two times on a turn. The player with the highest total score wins the game. After each round (3 rolls / round) points must be entered into a table.
