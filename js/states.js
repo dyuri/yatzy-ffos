@@ -65,6 +65,9 @@ Y.init = function () {
     $('.sheet').on('click', 'button:not([disabled])', function (e) {
       Y.board.selectCell(e.currentTarget);
     });
+    $('#select_lang').on('change', function (e) {
+      Y.board.setLanguage($(e.currentTarget).val());
+    });
   }
 };
 
@@ -268,6 +271,9 @@ Y.board = {
     });
 
     return types;
+  },
+  setLanguage: function (localeCode) {
+    navigator.mozL10n.language.code = localeCode; // en-US, hu-HU
   }
 };
 
