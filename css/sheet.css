@@ -176,6 +176,10 @@ h2 {
   display: inline-block;
 }
 
+.sheet .score td span[data-l10n-id]{
+  float:inherit;
+}
+
 .sheet .score td span {
   float: right;
   margin-right: 20px;
