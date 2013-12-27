@@ -113,7 +113,7 @@ Y.board = {
   gameOver: function (score, hslist, inhs) {
     var $hsul = $('#highscores');
 
-    $('#go-score span').html(score);
+    $('#go-score span:last-child').html(score);
     if (inhs < MAX_HIGHSCORES) {
       $('#inhs').css('display', 'block');
     } else {
@@ -162,8 +162,8 @@ Y.board = {
     }, this);
   },
   updateTotalScores: function (upper, total, bonus) {
-    $('#upper_score span').html(upper);
-    $('#total_score span').html(total);
+    $('#upper_score span:last-child').html(upper);
+    $('#total_score span:last-child').html(total);
     if (bonus) {
       $('.sheet').addClass('bonus');
     } else {
