@@ -27,7 +27,7 @@
   <section role="region">
     <header>
       <menu type="toolbar">
-        <button id="install"><span class="icon icon-add">add</span></button>
+        <button id="install"><span data-l10n-id="add" class="icon icon-add"></span></button>
       </menu>
       <img src="images/logosmogo.png" />
 
@@ -37,74 +37,72 @@
   <div id="main">
     <div class="tab tab-welcome active">
       <img src="images/logosmogo.png" class="slogo" />
-      <button class="startnew">Start New Game</button>
-      <p id="installation-instructions">Press the + button in the top right corner to install this app.</p>
+      <button class="startnew" data-l10n-id="startnew"></button>
+      <p id="installation-instructions" data-l10n-id="install-ins"></p>
     </div>
     <div class="tab tab-help">
       <div>
         <h1 data-l10n-id="selectlang"></h1>
         <select id="select_lang">
-            <option value="en-US" selected="selected">English (American)</option>
-            <option value="hu-HU">Hungarian</option>
+            <option value="en-US" selected="selected" data-l10n-id="en-us"></option>
+            <option value="hu-HU" data-l10n-id="hu"></option>
         </select>
       </div>
-      <h1>How to Play</h1>
-      <p class="lead">Yatzy can be played solitaire or by any number players. Players take turns rolling five dice. After each roll, the player chooses which dice to keep, and which to reroll. A player may reroll some or all of the dice up to two times on a turn. The player with the highest total score wins the game. After each round (3 rolls / round) points must be entered into a table.</p>
-      <h2>Scoring system</h2>
-      <p>
-      The following combinations earn points:
+      <h1 data-l10n-id="howtoplay"></h1>
+      <p class="lead" data-l10n-id="lead"></p>
+      <h2 data-l10n-id="scoring-system"></h2>
+      <p data-l10n-id="combinations">
       </p>
 
-      <p>
-      Upper Section:
-      </p>
-
-      <ul>
-        <li><i>Ones:</i> The sum of all dice showing the number 1.</li>
-        <li><i>Twos:</i> The sum of all dice showing the number 2.</li>
-        <li><i>Threes:</i> The sum of all dice showing the number 3.</li>
-        <li><i>Fours:</i> The sum of all dice showing the number 4.</li>
-        <li><i>Fives:</i> The sum of all dice showing the number 5.</li>
-        <li><i>Sixes:</i> The sum of all dice showing the number 6.</li>
-      </ul>
-
-      <p>
-      Lower Section:
+      <p data-l10n-id="upper-section">
       </p>
 
       <ul>
-        <li><i>One Pair:</i> Two dice showing the same number. Score: Sum of those two dice.</li>
-        <li><i>Two Pairs:</i> Two pairs of dice. Score: Sum of dice in those two pairs.</li>
-        <li><i>Three of a Kind:</i> Three dice showing the same number. Score: Sum of those three dice.</li>
-        <li><i>Four of a Kind:</i> Four dice with the same number. Score: Sum of those four dice.</li>
-        <li><i>Small Straight:</i> The combination 1, 2, 3, 4, 5. Score: 15 points (sum of all the dice).</li>
-        <li><i>Large Straight:</i> The combination 2, 3, 4, 5, 6. Score: 20 points (sum of all the dice).</li>
-        <li><i>House:</i> Any set of three combined with a set of two. Score: Sum of all the dice.</li>
-        <li><i>Yatzy:</i> All five dice with the same number. Score: 50 points.</li>
-        <li><i>Chance:</i> Any combination of dice. Score: Sum of all the dice.</li>
-        <li><i>Bonus:</i> If a player manages to score at least 63 points (three of each number) in the upper section, they are awarded a bonus of 50 points (in some instances 25 or 35).</li>
+	<li><span data-l10n-id="upper-one"></span>:&nbsp;<i data-l10n-id="upper-one-desc"></i></li>
+	<li><span data-l10n-id="upper-two"></span>:&nbsp;<i data-l10n-id="upper-two-desc"></i></li>
+	<li><span data-l10n-id="upper-three"></span>:&nbsp;<i data-l10n-id="upper-three-desc"></i></li>
+	<li><span data-l10n-id="upper-four"></span>:&nbsp;<i data-l10n-id="upper-four-desc"></i></li>
+	<li><span data-l10n-id="upper-five"></span>:&nbsp;<i data-l10n-id="upper-five-desc"></i></li>
+	<li><span data-l10n-id="upper-six"></span>:&nbsp;<i data-l10n-id="upper-six-desc"></i></li>
+      </ul>
+
+      <p data-l10n-id="lower-section">
+      </p>
+
+      <ul>
+	<li><span data-l10n-id="lower-1pair"></span>:&nbsp;<i data-l10n-id="lower-1pair-desc"></i></li>
+	<li><span data-l10n-id="lower-2pairs"></span>:&nbsp;<i data-l10n-id="lower-2pairs-desc"></i></li>
+	<li><span data-l10n-id="lower-3aok"></span>:&nbsp;<i data-l10n-id="lower-3aok-desc"></i></li>
+	<li><span data-l10n-id="lower-4aok"></span>:&nbsp;<i data-l10n-id="lower-4aok-desc"></i></li>
+	<li><span data-l10n-id="lower-ss"></span>:&nbsp;<i data-l10n-id="lower-ss-desc"></i></li>
+	<li><span data-l10n-id="lower-ls"></span>:&nbsp;<i data-l10n-id="lower-ls-desc"></i></li>
+	<li><span data-l10n-id="lower-house"></span>:&nbsp;<i data-l10n-id="lower-house-desc"></i></li>
+	<li><span data-l10n-id="lower-yatzy"></span>:&nbsp;<i data-l10n-id="lower-yatzy-desc"></i></li>
+	<li><span data-l10n-id="lower-chance"></span>:&nbsp;<i data-l10n-id="lower-chance-desc"></i></li>
+	<li><span data-l10n-id="lower-bonus"></span>:&nbsp;<i data-l10n-id="lower-bonus-desc"></i></li>
       </ul>
 
       <p>
       </p>
-      <h2>Other good things to know</h2>
+      <h2 data-l10n-id="good-to-know"></h2>
       <ul>
-        <li>You should generally aim for the 35 points bonus by filling the upper section with high scores (so as to get at least 63 points) near the beginning of the game.</li>
-        <li>If you roll a combination for which your available boxes give a low score, fill in a zero in the 1's box (or even the 2's or 3's), since high scores in the other boxes may compensate for this.</li>
-        <li>Early in the game you should use the chance box only as a fall-back for when you are trying for a high point combination and fail. You want to keep the chance box available for a situation where your options are very limited.</li>
-        <li>If you have a bad roll of the dice near the end of the game, you may enter a zero in the Yahtzee box or one of the other difficult combinations.</li>
-        <li>If you roll a pair of 1's or 2's early in the game, go for a full house, straight, or one of the other high numbers you rolled. Keeping the 1's or 2's to seek a 3 or 4 of a kind will not get you many points. Plus, it is a good idea to keep the 1's and 2's boxes available for later in the game to have the possibility of putting a zero there. As an example, if on your first turn your initial roll is 1 1 2 5 6, it turns out that keeping only the 5 is the choice that maximizes your expected score for the game.</li>
-        <li>If you roll four of a kind with 4's, 5's, or 6's, take the points in the upper section if they are available, not in the 4 of a kind box. This will help you get the 35 points bonus at the end of the game.</li>
-        <li>You should always try for a Yahtzee early in the game. If you roll a 3 or 4 of a kind on your first or second roll and you have the corresponding box in the upper section open, you should definitely go for the Yahtzee. Plus, if you saved your chance, 1's, or 2's boxes, you can score a zero there if you fail to get the Yahtzee."</li>
+        <li data-l10n-id="good-to-know-1"></li>
+        <li data-l10n-id="good-to-know-2"></li>
+        <li data-l10n-id="good-to-know-3"></li>
+        <li data-l10n-id="good-to-know-4"></li>
+        <li data-l10n-id="good-to-know-5"></li>
+        <li data-l10n-id="good-to-know-6"></li>
+        <li data-l10n-id="good-to-know-7"></li>
       </ul>
-      <a href="http://en.wikipedia.org/wiki/Yatzy">Yatzy on Wikipedia</a>
-      <h2>Developers</h2>      
-      <p>This application has been developed by <a href="http://imind.eu">iMind</a> and <a href="http://euedge.com">Euedge</a> and it was designed by <a href="http://trn.hu">trn</a>.
+      <a href="http://en.wikipedia.org/wiki/Yatzy" data-l10n-id="yatzy-link"></a>
+      <h2 data-l10n-id="developers"></h2>      
+
+      <p><span data-l10n-id="developed-by">This application has been developed by</span> <a href="http://imind.eu">iMind</a> <span data-l10n-id="and">and</span> <a href="http://euedge.com">Euedge</a> <span data-l10n-id="designed-by">and it was designed by</span><a href="http://trn.hu">trn</a>.
     </p>
     </div>
     <div class="tab tab-gameover">
-      <h1>Game over</h1>
-      <h2 id="go-score">Total score: <span></span></h2>
+      <h1 data-l10n-id="game-over"></h1>
+      <h2 id="go-score" data-l10n-id="score">: <span></span></h2>
       <p id="inhs"><!--Congratulations, you made it into the TOP TEN!--></p>
       <ol id="highscores"></ol>
     </div>
@@ -121,25 +119,25 @@
           <td><button id="sbtn_6" data-type="upper6">6 <span></span></button></td>
         </tr>
         <tr class="score">
-          <td colspan="3" id="upper_score"><hr />Upper score: <i>+bonus!</i> <span></span></td>
+		<td colspan="3" id="upper_score" data-l10n-id="upper-score"><hr />: <i data-l10n-id="bonus"></i> <span></span></td>
         </tr>
         <tr class="buttons">
-          <td><button id="sbtn_1p" data-type="kind2">1pair <span></span></button></td>
-          <td><button id="sbtn_2p" data-type="twopairs">2pairs <span></span></button></td>
-          <td><button id="sbtn_3aok" data-type="kind3">3aok <span></span></button></td>
+		<td><button id="sbtn_1p" data-type="kind2" data-l10n-id="1p"> <span></span></button></td>
+		<td><button id="sbtn_2p" data-type="twopairs" data-l10n-id="2p"> <span></span></button></td>
+		<td><button id="sbtn_3aok" data-type="kind3" data-l10n-id="3a"> <span></span></button></td>
         </tr>
         <tr class="buttons">
-          <td><button id="sbtn_4aok" data-type="kind4">4aok <span></span></button></td>
-          <td><button id="sbtn_ss" data-type="smallSt">ss <span></span></button></td>
-          <td><button id="sbtn_ls" data-type="largeSt">ls <span></span></button></td>
+		<td><button id="sbtn_4aok" data-type="kind4" data-l10n-id="4a"> <span></span></button></td>
+		<td><button id="sbtn_ss" data-type="smallSt" data-l10n-id="ss"> <span></span></button></td>
+		<td><button id="sbtn_ls" data-type="largeSt" data-l10n-id="ls"> <span></span></button></td>
         </tr>
         <tr class="buttons">
-          <td><button id="sbtn_h" data-type="house">house <span></span></button></td>
-          <td><button id="sbtn_y" data-type="yatzy">yatzy <span></span></button></td>
-          <td><button id="sbtn_ch" data-type="chance">chance <span></span></button></td>
+		<td><button id="sbtn_h" data-type="house" data-l10n-id="ho"> <span></span></button></td>
+		<td><button id="sbtn_y" data-type="yatzy" data-l10n-id="ya"> <span></span></button></td>
+		<td><button id="sbtn_ch" data-type="chance" data-l10n-id="ch"> <span></span></button></td>
         </tr>
         <tr class="score">
-          <td colspan="3" id="total_score"><hr />Total score: <span></span></td>
+		<td colspan="3" id="total_score" data-l10n-id="total"><hr />: <span></span></td>
         </tr>
       </table>
     </div>
