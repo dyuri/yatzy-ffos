@@ -14,6 +14,34 @@ var random = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
+var links = [
+	{ name: "trn", link:  'http://trn.hu' },
+	{ name: "iMind", link: 'http://imind.eu' },
+	{ name: "Euedge", link: 'http://euedge.com' }
+];
+
+/**
+ *  string x url -> html string link
+ */
+function makeLink(str, url){
+	return "<a href='" + url +"'>" + str + "</a>";
+}
+
+/**
+ * text x linkArr => text with links
+ */
+function linkText(text, linkArr){
+  var creditsContent = "" + text,
+      len = linkArr.length, i = 0, name, link;
+
+  for(i = 0; i < len; i++){
+	name = linkArr[i].name;
+	link = linkArr[i].link;
+	creditsContent = creditsContent.replace(name, makeLink(name, link));
+  }
+
+  return creditsContent;
+}
 
 Y.init = function () {
   // create rollable dice
@@ -35,6 +63,11 @@ Y.init = function () {
 
   // lock orientation
   var locked = window.screen && (window.screen.lockOrientation && window.screen.lockOrientation('portrait-primary')) || (window.screen.mozLockOrientation && window.screen.mozLockOrientation('portrait-primary'));
+
+  navigator.mozL10n.ready(function(){
+      // replace credits with links
+      $("p[data-credits]").html(linkText(navigator.mozL10n.get("credits"), links));
+  });
 
   // event handlers
   if ($.os.phone || $.os.tablet) {
