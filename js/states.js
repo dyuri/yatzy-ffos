@@ -64,6 +64,9 @@ Y.init = function () {
   // lock orientation
   var locked = window.screen && (window.screen.lockOrientation && window.screen.lockOrientation('portrait-primary')) || (window.screen.mozLockOrientation && window.screen.mozLockOrientation('portrait-primary'));
 
+  // sync lang with dropdown
+  $("#select_lang").val(navigator.language.toLowerCase());
+
   navigator.mozL10n.ready(function(){
       // replace credits with links
       $("p[data-credits]").html(linkText(navigator.mozL10n.get("credits"), links));
